@@ -29,6 +29,14 @@
     <script src="<?= \Idno\Core\site()->config()->url . 'external/bootstrap/' ?>assets/js/html5shiv.js"></script>
     <![endif]-->
 
+	
+    <!-- Shim to set some environment variables -->
+    <script>
+        function Site() {}
+
+        Site.url = '<?=\Idno\Core\site()->config()->url; ?>';
+    </script>
+
     <!-- Default idno JavaScript -->
     <script src="<?=\Idno\Core\site()->config()->url . 'js/default.js'?>"></script>
 
@@ -150,3 +158,64 @@
 
 </body>
 </html>
+=======
+            echo $this->draw('shell/toolbar/logged-out');
+
+    }
+
+?>  
+			</ul>
+		    </div><!--/.nav-collapse -->
+		</div>
+	    </div>
+	</div>
+
+	<div class="container">
+
+	    <?php
+	    
+		if ($messages = \Idno\Core\site()->session()->getAndFlushMessages()) {
+		    foreach($messages as $message) {
+			
+	    ?>
+	    
+	    <div class="alert <?=$message['message_type']?>">
+		<button type="button" class="close" data-dismiss="alert">&times;</button>
+		<?=$message['message']?>
+	    </div>
+	    
+	    <?php
+			
+		    }
+		}
+	    
+	    ?>
+        <?=$this->draw('shell/beforecontent')?>
+	    <?= $vars['body'] ?>
+        <?=$this->draw('shell/aftercontent')?>
+
+	</div> <!-- /container -->
+	
+	<!-- Le javascript
+	================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="<?= \Idno\Core\site()->config()->url . 'external/jquery/' ?>jquery.min.js"></script>
+	<script src="<?= \Idno\Core\site()->config()->url . 'external/bootstrap/' ?>assets/js/bootstrap.min.js"></script>
+    <!-- Sisyphus for localStorage forms support -->
+    <script src="<?= \Idno\Core\site()->config()->url . 'external/sisyphus/' ?>sisyphus.min.js"></script>
+    <!-- Video shim -->
+    <script src="<?=\Idno\Core\site()->config()->url . 'external/fitvids/jquery.fitvids.min.js'?>"></script>
+    <script>
+        $('form').sisyphus({
+            locationBased: true
+        });
+        $(document).ready(function(){
+            $(".h-entry").fitVids();
+        });
+    </script>
+
+    <?=$this->draw('shell/footer',$vars)?>
+
+    </body>
+</html>
+>>>>>>> support-subdirs
