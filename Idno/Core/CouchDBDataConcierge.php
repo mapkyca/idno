@@ -51,6 +51,8 @@ namespace Idno\Core {
                     }
                 ";
                 
+                $view->views->in_collection->reduce = "_count";
+                
                 $this->store($uuid, $view);
                 
             }
