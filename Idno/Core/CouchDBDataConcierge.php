@@ -318,7 +318,7 @@ namespace Idno\Core {
          * @return mixed
          */
         function getAnyRecord($collection = 'entities') {
-            //return $this->getRecord($collection); //TODO : Replace with findone equiv
+            //return $tihs->getRecord($collection); //TODO : Replace with findone equiv
         }
 
         /**
