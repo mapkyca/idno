@@ -27,7 +27,7 @@ namespace Idno\Core {
         {
             self::$site = $this;
             $this->dispatcher = new \Symfony\Component\EventDispatcher\EventDispatcher();
-            $this->config = new Config();
+            $this->config = new Config(); 
             $this->db = new CouchDBDataConcierge();
             $this->config->load();
             $this->session = new Session();
