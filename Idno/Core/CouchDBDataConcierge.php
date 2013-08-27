@@ -246,7 +246,7 @@ namespace Idno\Core {
         
         protected static function getUUID() {
             
-            return \Idno\Core\site()->config->host. '/' . uniqid();
+            return uniqid(\Idno\Core\site()->config->host.'_',true);
         }
         
         /**
@@ -258,7 +258,7 @@ namespace Idno\Core {
          */
 
         function saveRecord($collection, $array)
-        {
+        { 
             $uuid = CouchDBDataConcierge::getUUID();
             $record = new \stdClass();
             
@@ -311,7 +311,14 @@ namespace Idno\Core {
          * @return array
          */
 
-        function getRecord($id, $collection = 'entities') { return $this->getRecordByUUID($id, $collection); }
+        function getRecord($id, $collection = 'entities') { // Extract id from domain
+            
+            $obj = $this->retrieve($id); 
+            if ($obj)
+                return (array)$obj->value->payload;
+            return false;
+            
+        }
 
         /**
          * Retrieves ANY record from a collection
@@ -333,12 +340,7 @@ namespace Idno\Core {
 
         function getRecordByUUID($uuid, $collection = 'entities') { 
             
-            // Extract id from domain
-            
-            $obj = $this->retrieve($uuid); 
-            if ($obj)
-                return (array)$obj->value->payload;
-            return false;
+            // Get ID from url
         }
 
         /**
