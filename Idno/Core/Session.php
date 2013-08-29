@@ -181,6 +181,7 @@ namespace Idno\Core {
         function logUserOn(\Idno\Entities\User $user)
         {
             $_SESSION['user'] = $user;
+            session_regenerate_id();
             return $user;
         }
 
@@ -192,6 +193,7 @@ namespace Idno\Core {
         function logUserOff()
         {
             unset($_SESSION['user']);
+            session_destroy();
             return true;
         }
 
