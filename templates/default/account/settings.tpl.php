@@ -12,11 +12,7 @@
 	    <p>
 		Change your basic account settings here.
 	    </p>
-	    <form action="<?php $base_url = \Idno\Core\site()->config()->url; 
-   
-                if (\Idno\Core\site()->config()->secure_sensitive_pages)
-                    $base_url = 'https:' . $base_url;
-            echo $base_url; ?>account/settings" method="post" class="form-horizontal" enctype="multipart/form-data">
+	    <form action="/account/settings" method="post" class="form-horizontal" enctype="multipart/form-data">
             <div class="control-group">
                 <label class="control-label" for="inputName">Your name</label>
                 <div class="controls">

@@ -21,7 +21,6 @@ namespace Idno\Core {
                 'Status'
             ),
             'items_per_page' => 10,      // Default items per page
-            'secure_sensitive_pages' => false,   // Force login, settings pages etc over HTTPS
         );
 
         function init()

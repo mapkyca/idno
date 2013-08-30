@@ -30,7 +30,6 @@
                 $path = $this->getInput('path');
                 $host = $this->getInput('host');
                 $open_registration = $this->getInput('open_registration');
-                $secure_sensitive_pages = $this->getInput('secure_sensitive_pages');
                 $items_per_page = (int) $this->getInput('items_per_page');
                 if ($open_registration == 'true') {
                     $open_registration = true;
