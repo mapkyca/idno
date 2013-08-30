@@ -26,8 +26,7 @@
             {
                 $this->adminGatekeeper();  // Admins only
                 $title = $this->getInput('title');
-                $url = str_replace('http:', '', $this->getInput('url'));
-                $url = str_replace('https:', '', $url);
+                $url = $this->getInput('url');
                 $path = $this->getInput('path');
                 $host = $this->getInput('host');
                 $open_registration = $this->getInput('open_registration');
