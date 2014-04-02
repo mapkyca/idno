@@ -25,14 +25,15 @@
                 $t->__(array(
 
                     'title' => $object->getTitle(),
-                    'body' => $object->draw()
+                    'body'  => $object->draw()
 
                 ))->drawPage();
             }
 
             // Handle POST requests to the entity
 
-            function postContent() {
+            function postContent()
+            {
                 if (!empty($this->arguments[0])) {
                     $object = \Idno\Common\Entity::getByID($this->arguments[0]);
                 }

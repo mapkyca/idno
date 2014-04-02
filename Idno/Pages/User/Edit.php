@@ -25,7 +25,7 @@
                 $t->__(array(
 
                     'title' => 'Edit profile: ' . $user->getTitle(),
-                    'body' => $t->__(array('user' => $user))->draw('entity/User/edit')
+                    'body'  => $t->__(array('user' => $user))->draw('entity/User/edit')
 
                 ))->drawPage();
             }

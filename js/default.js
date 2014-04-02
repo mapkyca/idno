@@ -13,6 +13,13 @@
 *** Content creation
  */
 
+    function bindControls() {
+        $('.acl-option').click(function() {
+            $('#access-control-id').val($(this).attr('data-acl'));
+            $('#acl-text').html($(this).html());
+        });
+    }
+
     function contentCreateForm(plugin) {
         /*if (window.contentCreateType == plugin) {
             $('#contentCreate').slideDown(400);
@@ -28,6 +35,8 @@
                     if (jQuery){
                         //$('form').sisyphus();
                     }
+                    
+                    bindControls();
                 },
                 error: function(error) {
                     $('#contentTypeButtonBar').slideDown(400);
@@ -38,14 +47,14 @@
     }
 
     function hideContentCreateForm() {
+        console.log("Hello");
         if (window.contentPage == true) {
             $('#contentTypeButtonBar').slideDown(200);
             $('#contentCreate').slideUp(200);
         } else {
+            window.close(); // Will only fire for child windows
             if (window.history.length > 1) {
-                window.history.go(-1);
-            } else {
-                window.close();
+                window.history.back();
             }
         }
     }

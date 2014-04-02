@@ -32,10 +32,12 @@
                     <textarea name="body" id="body" class="span9 bodyInput"><?=htmlspecialchars($vars['object']->body)?></textarea>
                 </label>
             </p>
+            <?php if (empty($vars['object']->_id)) echo $this->drawSyndication('image'); ?>
             <p>
                 <?= \Idno\Core\site()->actions()->signForm('/photo/edit') ?>
                 <input type="submit" class="btn btn-primary" value="Save" />
                 <input type="button" class="btn" value="Cancel" onclick="hideContentCreateForm();" />
+                <?= $this->draw('content/access'); ?>
             </p>
         </div>
 

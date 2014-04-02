@@ -3,20 +3,16 @@
     <div class="span10 offset1">
         <h1>Dependencies</h1>
         <?=$this->draw('admin/menu')?>
+        <div class="explanation">
+            <p>
+                The following are system components that are required for idno to fully run.
+                It's worth checking to make sure that they're all installed. If you need help
+                installing any required packages, ask your web host or system administrator.
+            </p>
+        </div>
     </div>
 
 </div>
-
-<div class="row">
-    <div class="span10 offset1">
-        <p>
-            The following are system components that are required for idno to fully run.
-            It's worth checking to make sure that they're all installed. If you need help
-            installing any required packages, ask your web host or system administrator.
-        </p>
-    </div>
-</div>
-
 <div class="row">
 
     <div class="span5 offset1">
@@ -42,7 +38,7 @@
             including installation instructions.</small><br />
             <?php
 
-                foreach(['curl','date','dom','fileinfo','gd','intl','json','libxml','mbstring','mongo','oauth','reflection','session','simplexml'] as $extension) {
+                foreach(['curl','date','dom','fileinfo','gd','intl','json','libxml','mbstring','mongo','oauth','reflection','session','simplexml', 'xmlrpc'] as $extension) {
                     if (extension_loaded($extension)) {
                         $label = 'label-success';
                     } else {

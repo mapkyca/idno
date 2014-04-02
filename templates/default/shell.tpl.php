@@ -1,7 +1,8 @@
 <?php
 
     header('Content-type: text/html');
-    header('Link: <' . \Idno\Core\site()->config()->url . 'webmention/>; rel="http://webmention.org/"')
+    header('Link: <' . \Idno\Core\site()->config()->url . 'webmention/>; rel="http://webmention.org/"');
+    header('Link: <' . \Idno\Core\site()->config()->url . 'webmention/>; rel="webmention"');
 
 ?>
 <?php if (!$_SERVER["HTTP_X_PJAX"]): ?>
@@ -11,6 +12,7 @@
     <meta charset="utf-8">
     <title><?= htmlspecialchars($vars['title']); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="initial-scale=1.0" media="(device-height: 568px)" />
     <meta name="description" content="<?= htmlspecialchars($vars['description']) ?>">
     <meta name="generator" content="idno http://idno.co">
     <?= $this->draw('shell/favicon'); ?>
@@ -38,10 +40,13 @@
 
     <!-- To silo is human, to syndicate divine -->
     <link rel="alternate" type="application/rss+xml" title="<?= htmlspecialchars($vars['title']) ?>"
-          href="<?= $this->getCurrentURLWithVar('_t', 'rss'); ?>"/>
+          href="<?= $this->getURLWithVar('_t', 'rss'); ?>"/>
 
     <!-- Webmention endpoint -->
     <link href="<?= \Idno\Core\site()->config()->url ?>webmention/" rel="http://webmention.org/"/>
+    <link href="<?= \Idno\Core\site()->config()->url ?>webmention/" rel="webmention"/>
+
+    <link type="text/plain" rel="author" href="<?= \Idno\Core\site()->config()->url ?>humans.txt" />
 
     <?= $this->draw('shell/head', $vars); ?>
 
@@ -172,6 +177,7 @@
         annotateContent();
     });
 
+   
 </script>
 
 <?= $this->draw('shell/footer', $vars) ?>

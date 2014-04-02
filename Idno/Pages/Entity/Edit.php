@@ -26,7 +26,7 @@
                 $t->__(array(
 
                     'title' => $object->getTitle(),
-                    'body' => $object->drawEdit()
+                    'body'  => $object->drawEdit()
 
                 ))->drawPage();
             }

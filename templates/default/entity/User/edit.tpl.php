@@ -1,4 +1,4 @@
-<form action="<?=$vars['user']->getURL()?>" method="post">
+<form action="<?=$vars['user']->getURL()?>" method="post" enctype="multipart/form-data">
 
     <div class="row beforecontent">
         <div class="span11 offset1">
@@ -19,6 +19,13 @@
                     <textarea name="profile[description]" id="body" class="span6 bodyInput"><?=htmlspecialchars($vars['user']->getDescription())?></textarea>
                 </label>
             </p>
+
+            <div class="control-group">
+                <label class="control-label" for="inputAvatar"><a name="avatar"></a>Upload a new avatar</label>
+                <div class="controls">
+                    <input type="file" id="inputAvatar" class="span4" name="avatar">
+                </div>
+            </div>
 
         </div>
 

@@ -168,6 +168,8 @@
                     return $thumbnail;
 
                 }
+
+                return false;
             }
 
             /**
@@ -180,6 +182,8 @@
                 if ($fs = \Idno\Core\site()->db()->getFilesystem()) {
                     return $fs->findOne($uuid);
                 }
+
+                return false;
             }
 
             /**
@@ -192,6 +196,8 @@
                 if ($fs = \Idno\Core\site()->db()->getFilesystem()) {
                     return $fs->findOne(array('_id' => new \MongoId($id)));
                 }
+
+                return false;
             }
 
             /**

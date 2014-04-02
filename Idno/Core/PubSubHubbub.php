@@ -16,10 +16,11 @@
             {
             }
 
-            function registerEventHooks() {
+            function registerEventHooks()
+            {
 
                 // Hook into the "saved" event to publish to PuSH when an entity is saved
-                \Idno\Core\site()->addEventHook('saved', function(\Idno\Core\Event $event) {
+                \Idno\Core\site()->addEventHook('saved', function (\Idno\Core\Event $event) {
                     if ($object = $event->data()['object']) {
                         /* @var \Idno\Common\Entity $object */
                         if ($object->isPublic()) {
@@ -42,7 +43,7 @@
 
                     return \Idno\Core\Webservice::post($hub, [
                         'hub.mode' => 'publish',
-                        'hub.url'  => $url
+                        'hub.url'  => \Idno\Core\site()->config()->feed
                     ]);
 
                 }
