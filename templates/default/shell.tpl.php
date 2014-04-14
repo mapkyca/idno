@@ -6,13 +6,13 @@
 
 ?>
 <?php if (!$_SERVER["HTTP_X_PJAX"]): ?>
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
     <title><?= htmlspecialchars($vars['title']); ?></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="initial-scale=1.0" media="(device-height: 568px)" />
+    <meta name="viewport" content="initial-scale=1.0" media="(device-height: 568px)"/>
     <meta name="description" content="<?= htmlspecialchars($vars['description']) ?>">
     <meta name="generator" content="idno http://idno.co">
     <?= $this->draw('shell/favicon'); ?>
@@ -46,7 +46,18 @@
     <link href="<?= \Idno\Core\site()->config()->url ?>webmention/" rel="http://webmention.org/"/>
     <link href="<?= \Idno\Core\site()->config()->url ?>webmention/" rel="webmention"/>
 
-    <link type="text/plain" rel="author" href="<?= \Idno\Core\site()->config()->url ?>humans.txt" />
+    <link type="text/plain" rel="author" href="<?= \Idno\Core\site()->config()->url ?>humans.txt"/>
+
+    <?php
+        // Load style assets
+        if ($style = \Idno\Core\site()->currentPage->getAssets('css')) {
+            foreach ($style as $css) {
+                ?>
+                <link href="<?= $css; ?>" rel="stylesheet">
+            <?php
+            }
+        }
+    ?>
 
     <?= $this->draw('shell/head', $vars); ?>
 
@@ -57,7 +68,7 @@
 <div id="pjax-container">
     <?php
         $currentPage = \Idno\Core\site()->currentPage();
-        
+
         if (!empty($currentPage))
             $hidenav = \Idno\Core\site()->currentPage()->getInput('hidenav');
         if (empty($vars['hidenav']) && empty($hidenav)) {
@@ -74,7 +85,7 @@
                            href="<?= \Idno\Core\site()->config()->url ?>"><?= \Idno\Core\site()->config()->title ?></a>
 
                         <div class="nav-collapse collapse">
-                            <?=$this->draw('shell/toolbar/search') ?>
+                            <?= $this->draw('shell/toolbar/search') ?>
                             <ul class="nav" role="menu">
                             </ul>
                             <?= $this->draw('shell/toolbar/content') ?>
@@ -138,8 +149,7 @@
 </div>
 <!-- pjax-container -->
 <?php if (!$_SERVER["HTTP_X_PJAX"]): ?>
-<!-- Le javascript
-================================================== -->
+<!-- Le javascript -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="<?= \Idno\Core\site()->config()->url . 'external/jquery/' ?>jquery.min.js"></script>
 <script src="<?= \Idno\Core\site()->config()->url . 'external/jquery-timeago/' ?>jquery.timeago.js"></script>
@@ -147,8 +157,21 @@
 <script src="<?= \Idno\Core\site()->config()->url . 'external/bootstrap/' ?>assets/js/bootstrap.min.js"></script>
 <!-- Video shim -->
 <script src="<?= \Idno\Core\site()->config()->url . 'external/fitvids/jquery.fitvids.min.js' ?>"></script>
+
+<?php
+    // Load javascript assets
+    if ($scripts = \Idno\Core\site()->currentPage->getAssets('javascript')) {
+        foreach ($scripts as $script) {
+            ?>
+            <script src="<?= $script ?>"></script>
+        <?php
+        }
+    }
+?>
+
 <!-- HTML5 form element support for legacy browsers -->
 <script src="<?= \Idno\Core\site()->config()->url . 'external/h5f/h5f.min.js' ?>"></script>
+
 <script>
 
     //$(document).pjax('a:not([href^=\\.],[href^=file])', '#pjax-container');    // In idno, URLs with extensions are probably files.
@@ -169,17 +192,21 @@
     function annotateContent() {
         $(".h-entry").fitVids();
         $("time.dt-published").timeago();
-
     }
+
+    // Shim so that JS functions can get the current site URL
+    function wwwroot() {
+        return '<?=\Idno\Core\site()->config()->wwwroot?>';
+    }
+
     $(document).ready(function () {
         annotateContent();
     })
-
     $(document).on('pjax:complete', function () {
         annotateContent();
     });
 
-   
+
 </script>
 
 <?= $this->draw('shell/footer', $vars) ?>

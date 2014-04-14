@@ -61,6 +61,7 @@
                 $this->addPageHandler('/profile/([A-Za-z0-9]+)/edit/?', '\Idno\Pages\User\Edit');
                 $this->addPageHandler('/robots\.txt', '\Idno\Pages\Txt\Robots');
                 $this->addPageHandler('/humans\.txt', '\Idno\Pages\Txt\Humans');
+                $this->addPageHandler('/autosave/?', '\Idno\Pages\Entity\Autosave');
 
             }
 
@@ -265,7 +266,7 @@
              */
             function version()
             {
-                return '0.1 development';
+                return '0.1-dev';
             }
 
         }
