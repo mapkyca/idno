@@ -179,6 +179,17 @@
 
                 return false;
             }
+	    
+	    /**
+	     * Retrieve a user by their profile URL.
+	     * @param string $url
+	     * @return User|false
+	     */
+	    static function getByProfileURL($url) {
+		if (preg_match("~".\Idno\Core\site()->config()->url . 'profile/([A-Za-z0-9]+)?~', $url, $matches))
+			return \Idno\Entities\User::getByHandle ($matches[1]);
+		return false;
+	    }
 
             /**
              * Returns this user's unique key for use with the API, and generates a new one if they don't
