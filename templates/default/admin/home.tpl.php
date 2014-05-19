@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="open_registration">Open registration<br /><small>Can anyone register for this site? If you're installing idno as a personal or closed-membership site, you'll want to turn this off.</small></label>
+                <label class="control-label" for="open_registration">Open registration<br /><small>Can anyone register for this site? If you're installing Known as a personal or closed-membership site, you'll want to turn this off.</small></label>
                 <div class="controls">
                     <select class="span4" name="open_registration">
                         <option value="true" <?php if (\Idno\Core\site()->config()->open_registration == true) echo 'selected="selected"'; ?>>Yes</option>
@@ -39,21 +39,21 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="url">Website URL<br /><small>The full URL to your idno-powered site. Include a trailing slash.</small></label>
+                <label class="control-label" for="url">Website URL<br /><small>The full URL to your Known site.</small></label>
                 <div class="controls">
                     <input type="url" id="url" placeholder="Site URL" class="span4" name="url" value="<?=htmlspecialchars(\Idno\Core\site()->config()->url)?>" >
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="host">Website host<br /><small>Just the hostname of your idno-powered site (no http:// or trailing slash).</small></label>
+                <label class="control-label" for="host">Website host<br /><small>Just the hostname of your Known site (no http:// or trailing slash).</small></label>
                 <div class="controls">
                     <input type="text" id="host" placeholder="Site hostname" class="span4" name="host" value="<?=htmlspecialchars(\Idno\Core\site()->config()->host)?>" >
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="path">Full path to installation<br /><small>Make sure you don't include a trailing slash.</small></label>
+                <label class="control-label" for="path">Full path to installation<br /></label>
                 <div class="controls">
-                    <input type="text" id="path" placeholder="Path to idno installation" class="span4" name="path" value="<?=htmlspecialchars(\Idno\Core\site()->config()->path)?>" >
+                    <input type="text" id="path" placeholder="Path to Known installation" class="span4" name="path" value="<?=htmlspecialchars(\Idno\Core\site()->config()->path)?>" >
                 </div>
             </div>
             <div class="control-group">
@@ -69,7 +69,7 @@
                 </div>
             </div>
             <div class="control-group">
-                <label class="control-label" for="user_avatar_favicons">Use the user's avatar as the website icon on pages they own</small></label>
+                <label class="control-label" for="user_avatar_favicons">Use the user's picture as the website icon on pages they own</small></label>
                 <div class="controls">
                     <select class="span4" name="user_avatar_favicons">
                         <option value="true" <?php if (\Idno\Core\site()->config()->user_avatar_favicons == true) echo 'selected="selected"'; ?>>Yes</option>

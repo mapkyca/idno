@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="viewport" content="initial-scale=1.0" media="(device-height: 568px)"/>
     <meta name="description" content="<?= htmlspecialchars($vars['description']) ?>">
-    <meta name="generator" content="idno http://idno.co">
+    <meta name="generator" content="Known http://withknown.com">
     <?= $this->draw('shell/favicon'); ?>
 
     <!-- Le styles -->
@@ -35,12 +35,16 @@
     <script src="<?= \Idno\Core\site()->config()->url . 'external/bootstrap/' ?>assets/js/html5shiv.js"></script>
     <![endif]-->
 
-    <!-- Default idno JavaScript -->
+    <!-- Default Known JavaScript -->
     <script src="<?= \Idno\Core\site()->config()->url . 'js/default.js' ?>"></script>
 
     <!-- To silo is human, to syndicate divine -->
-    <link rel="alternate" type="application/rss+xml" title="<?= htmlspecialchars($vars['title']) ?>"
+    <link rel="alternate feed" type="application/rss+xml" title="<?= htmlspecialchars($vars['title']) ?>"
           href="<?= $this->getURLWithVar('_t', 'rss'); ?>"/>
+    <link rel="alternate feed" type="application/rss+xml" title="<?= htmlspecialchars(\Idno\Core\site()->config()->title) ?>: all content"
+          href="<?= \Idno\Core\site()->config()->url ?>content/all?_t=rss"/>
+    <link rel="feed" type="text/html" title="<?= htmlspecialchars(\Idno\Core\site()->config()->title) ?>"
+          href="<?= \Idno\Core\site()->config()->url ?>content/all"/>
 
     <!-- Webmention endpoint -->
     <link href="<?= \Idno\Core\site()->config()->url ?>webmention/" rel="http://webmention.org/"/>
@@ -175,7 +179,7 @@
 
 <script>
 
-    //$(document).pjax('a:not([href^=\\.],[href^=file])', '#pjax-container');    // In idno, URLs with extensions are probably files.
+    //$(document).pjax('a:not([href^=\\.],[href^=file])', '#pjax-container');    // In Known, URLs with extensions are probably files.
     /*$(document).on('pjax:click', function(event) {
      if (event.target.href.match('/edit/')) {
      // For a reason I can't actuallly figure out, /edit pages never render with chrome
