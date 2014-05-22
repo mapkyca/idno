@@ -132,6 +132,18 @@
                 }
             }
 
+            /**
+             * Is this site's content available to non-members?
+             * @return bool
+             */
+            function isPublicSite()
+            {
+                if (empty($this->walled_garden)) {
+                    return true;
+                }
+                return false;
+            }
+
         }
 
     }

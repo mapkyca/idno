@@ -53,7 +53,7 @@
 
             function init()
             {
-                header('X-Powered-By: http://idno.co');
+                header('X-Powered-By: http://withknown.com');
                 if ($template = $this->getInput('_t')) {
                     if (\Idno\Core\site()->template()->templateTypeExists($template)) {
                         \Idno\Core\site()->template()->setTemplateType($template);
@@ -77,6 +77,7 @@
              */
             function get()
             {
+                \Idno\Core\site()->session()->publicGatekeeper();
 
                 if ($this->isAcceptedContentType('application/json')) {
                     \Idno\Core\site()->template()->setTemplateType('json');
@@ -103,6 +104,7 @@
              */
             function post()
             {
+                \Idno\Core\site()->session()->publicGatekeeper();
 
                 if ($this->isAcceptedContentType('application/json')) {
                     \Idno\Core\site()->template()->setTemplateType('json');
@@ -133,6 +135,7 @@
              */
             function put()
             {
+                \Idno\Core\site()->session()->publicGatekeeper();
 
                 if ($this->isAcceptedContentType('application/json')) {
                     \Idno\Core\site()->template()->setTemplateType('json');
@@ -162,6 +165,7 @@
              */
             function delete()
             {
+                \Idno\Core\site()->session()->publicGatekeeper();
 
                 if ($this->isAcceptedContentType('application/json')) {
                     \Idno\Core\site()->template()->setTemplateType('json');
@@ -190,6 +194,8 @@
              */
             function get_xhr()
             {
+                \Idno\Core\site()->session()->publicGatekeeper();
+
                 if ($this->isAcceptedContentType('application/json')) {
                     \Idno\Core\site()->template()->setTemplateType('json');
                 }
@@ -205,6 +211,8 @@
              */
             function post_xhr()
             {
+                \Idno\Core\site()->session()->publicGatekeeper();
+
                 if ($this->isAcceptedContentType('application/json')) {
                     \Idno\Core\site()->template()->setTemplateType('json');
                 }
@@ -221,6 +229,8 @@
              */
             function put_xhr()
             {
+                \Idno\Core\site()->session()->publicGatekeeper();
+
                 if ($this->isAcceptedContentType('application/json')) {
                     \Idno\Core\site()->template()->setTemplateType('json');
                 }
@@ -237,6 +247,8 @@
              */
             function delete_xhr()
             {
+                \Idno\Core\site()->session()->publicGatekeeper();
+
                 if ($this->isAcceptedContentType('application/json')) {
                     \Idno\Core\site()->template()->setTemplateType('json');
                 }
@@ -252,6 +264,8 @@
              */
             function webmention()
             {
+                \Idno\Core\site()->session()->publicGatekeeper();
+
                 if ($this->isAcceptedContentType('application/json')) {
                     \Idno\Core\site()->template()->setTemplateType('json');
                 }
@@ -625,7 +639,16 @@
             {
                 return $this->assets[$class];
             }
-
+	    
+	    /**
+	     * Set the last updated header for this page.
+	     * Takes a unix timestamp and outputs it as RFC2616 date.
+	     * @param int $timestamp Unix timestamp.
+	     */
+	    public function setLastModifiedHeader($timestamp) {
+		header('Last-Modified: ' .  self::timestampToRFC2616($timestamp));
+	    }
+	    
             /**
              * Return whether the current page URL matches the given regex string.
              * @param type $regex_string URL string in the same format as the page handler definition.
@@ -704,6 +727,15 @@
 
                 return $page;
             }
+	    
+	    /**
+	     * Convert a unix timestamp into an RFC2616 (HTTP) compatible date.
+	     * @param type $timestamp
+	     */
+	    public static function timestampToRFC2616($timestamp) {
+		return gmdate('D, d M Y H:i:s T', (int)$timestamp);
+	    }
+
         }
 
     }
