@@ -12,7 +12,10 @@
 
     namespace Idno\Common {
 
-        class Entity extends Component implements \JsonSerializable
+        interface EntityInterface extends \JsonSerializable, \ArrayAccess
+        {}
+
+        class Entity extends Component implements EntityInterface
         {
 
             // Which collection should this be stored in?
@@ -30,7 +33,12 @@
 
             function __construct()
             {
-                $this->setOwner(\Idno\Core\site()->session()->currentUser());
+                if (\Idno\Core\site()->session()) {
+                    if ($user = \Idno\Core\site()->session()->currentUser()) {
+                        //var_export(\Idno\Core\site()->session()->currentUser());
+                        $this->setOwner(\Idno\Core\site()->session()->currentUser());
+                    }
+                }
             }
 
             /**
@@ -152,7 +160,7 @@
             static function getByID($id)
             {
                 try {
-                    return self::getOneFromAll(array('_id' => new \MongoId($id)));
+                    return self::getOneFromAll(array('_id' => \Idno\Core\site()->db()->processID($id)));
                 } catch (\Exception $e) {
                     return false; //\Idno\Core\site()->currentPage()->noContent();
                 }
@@ -298,9 +306,12 @@
 
             function &__get($name)
             {
-                if (isset($this->attributes[$name])) return $this->attributes[$name];
+                if (!isset($this->attributes[$name])) {
+                    $this->attributes[$name] = null;
+                }
 
-                return null;
+                return $this->attributes[$name];
+
             }
 
             /**
@@ -598,7 +609,8 @@
 
                 $other_results = \Idno\Entities\ActivityStreamPost::get($search);
 
-                return array_merge($results, $other_results);
+                $return = array_merge($results, $other_results);
+                return $return;
 
             }
 
@@ -606,7 +618,7 @@
              * Attaches a file reference to this entity
              * @param \MongoGridFSFile $file_wrapper
              */
-            function attachFile(\MongoGridFSFile $file_wrapper)
+            function attachFile($file_wrapper)
             {
                 $file = $file_wrapper->file;
                 if (empty($this->attachments) || !is_array($this->attachments)) {
@@ -1426,6 +1438,33 @@
 
                 \Idno\Core\site()->triggerEvent('annotation/add/' . $subtype, ['annotation' => $annotation, 'object' => $this]);
 
+                if ($owner = $this->getOwner()) {
+
+                    switch ($subtype) {
+                        case 'reply':
+                            $subject               = $owner_name . ' replied to your post!';
+                            $notification_template = 'content/notification/reply';
+                            $context               = 'reply';
+                            break;
+                        case 'like':
+                            $subject               = $owner_name . ' liked your post!';
+                            $notification_template = 'content/notification/like';
+                            $context               = 'like';
+                            break;
+                        case 'share':
+                            $subject               = $owner_name . ' reshared your post!';
+                            $notification_template = 'content/notification/share';
+                            $context               = 'share';
+                            break;
+                        case 'rsvp':
+                            $subject               = $owner_name . ' RSVPed!';
+                            $notification_template = 'content/notification/rsvp';
+                            $context               = 'rsvp';
+                            break;
+                    }
+                    $owner->notify($subject, $notification_template, $annotation, $context, $this);
+                }
+
                 return true;
             }
 
@@ -1490,6 +1529,49 @@
                 }
 
                 return 0;
+            }
+
+            /**
+             * Allows you to query for a property value as you would an array
+             * @param mixed $offset
+             * @return bool
+             */
+            function offsetExists($offset) {
+                return empty($this->attributes[$offset]);
+            }
+
+            /**
+             * Allows you to retrieve a property value as you would an array
+             * @param mixed $offset
+             * @return mixed
+             */
+            function offsetGet($offset) {
+                return $this->attributes[$offset];
+            }
+
+            /**
+             * Allows you to set a property value as you would an array
+             * @param mixed $offset
+             * @param mixed $value
+             */
+            function offsetSet($offset, $value) {
+                $this->attributes[$offset] = $value;
+            }
+
+            /**
+             * Allows you to unset a property value as you would an array
+             * @param mixed $offset
+             */
+            function offsetUnset($offset) {
+                unset($this->attributes[$offset]);
+            }
+
+            /**
+             * Retrieve this object's stored attributes
+             * @return array
+             */
+            function getAttributes() {
+                return $this->attributes;
             }
 
         }

@@ -89,8 +89,24 @@ h2 {
     line-height: 1.2em;
 }
 
-.idno-entry .h-card .icon-container {
+.idno-entry .hidden-phone .h-card .icon-container {
     margin-bottom: 1em;
+    width: 60px;
+    height: 60px;
+    overflow: hidden;
+}
+
+.idno-entry .visible-phone .h-card .icon-container {
+    width: 1.3em;
+    height: 1.3em;
+    margin-bottom: -0.3em;
+    overflow: hidden;
+    border-radius: 0px !important;
+}
+
+.idno-entry .h-card .icon-container .u-photo {
+    width: 100%;
+    height: auto;
 }
 
 .idno-object .edit {
@@ -391,4 +407,21 @@ span.contentTypeLogo {
     font-size: 0.8em;
 }
 
+/**
+ * Data panes
+ */
 
+.pane {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 15em;
+    border: 1px #ddd solid;
+}
+
+div.pane div.row:nth-of-type(even) {
+    background-color: #fff;
+}
+
+div.pane div.row:nth-of-type(odd) {
+    background-color: #fafafa;
+}

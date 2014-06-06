@@ -1,8 +1,11 @@
 <?php
 
+    $messages = $vars['messages'];
+
     header('Content-type: text/html');
     header('Link: <' . \Idno\Core\site()->config()->url . 'webmention/>; rel="http://webmention.org/"');
     header('Link: <' . \Idno\Core\site()->config()->url . 'webmention/>; rel="webmention"');
+    header("Access-Control-Allow-Origin: *");
 
 ?>
 <?php if (!$_SERVER["HTTP_X_PJAX"]): ?>
@@ -74,7 +77,7 @@
 
     <?php
         // Load style assets
-        if ($style = \Idno\Core\site()->currentPage->getAssets('css')) {
+        if ((\Idno\Core\site()->currentPage()) && $style = \Idno\Core\site()->currentPage->getAssets('css')) {
             foreach ($style as $css) {
                 ?>
                 <link href="<?= $css; ?>" rel="stylesheet">
@@ -84,6 +87,10 @@
     ?>
 
     <script src="<?=\Idno\Core\site()->config()->url?>external/fragmention/fragmention.js"></script>
+
+    <!-- We need jQuery at the top of the page -->
+    <script src="<?= \Idno\Core\site()->config()->url . 'external/jquery/' ?>jquery.min.js"></script>
+
     <?= $this->draw('shell/head', $vars); ?>
 
 </head>
@@ -151,7 +158,7 @@
 
         <?php
 
-            if ($messages = \Idno\Core\site()->session()->getAndFlushMessages()) {
+            if (!empty($messages)) {
                 foreach ($messages as $message) {
 
                     ?>
@@ -178,7 +185,6 @@
 <?php if (!$_SERVER["HTTP_X_PJAX"]): ?>
 <!-- Le javascript -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="<?= \Idno\Core\site()->config()->url . 'external/jquery/' ?>jquery.min.js"></script>
 <script src="<?= \Idno\Core\site()->config()->url . 'external/jquery-timeago/' ?>jquery.timeago.js"></script>
 <script src="<?= \Idno\Core\site()->config()->url . 'external/jquery-pjax/' ?>jquery.pjax.js"></script>
 <script src="<?= \Idno\Core\site()->config()->url . 'external/bootstrap/' ?>assets/js/bootstrap.min.js"></script>
@@ -187,7 +193,7 @@
 
 <?php
     // Load javascript assets
-    if ($scripts = \Idno\Core\site()->currentPage->getAssets('javascript')) {
+    if ((\Idno\Core\site()->currentPage()) && $scripts = \Idno\Core\site()->currentPage->getAssets('javascript')) {
         foreach ($scripts as $script) {
             ?>
             <script src="<?= $script ?>"></script>
@@ -223,7 +229,7 @@
 
     // Shim so that JS functions can get the current site URL
     function wwwroot() {
-        return '<?=\Idno\Core\site()->config()->wwwroot?>';
+        return '<?=\Idno\Core\site()->config()->getURL()?>';
     }
 
     $(document).ready(function () {

@@ -2,7 +2,7 @@ Known
 =====
 Known is a publishing platform for everyone.
 
-Project homepage: <http://withknown.com>
+Learn more and sign up to get updates: <http://withknown.com>
 
 Known is under active development and an installable package is not yet available. It requires PHP 5.4+ with the MongoDB extension, Apache Web Server with the mod_rewrite extension, and MongoDB.
 
@@ -41,3 +41,4 @@ Known also contains
 * Leaflet.js: http://leafletjs.com/ (License: https://github.com/Leaflet/Leaflet/blob/master/LICENSE)
 * H5f HTML5 Form shim, which is distributed under the MIT License. Source: https://github.com/ryanseddon/H5F
 * SwiftMailer, which is distributed under the MIT License. Source: https://github.com/swiftmailer/swiftmailer
+* Antwort, an email template which is distributed under the MIT License. Source: https://github.com/internations/antwort

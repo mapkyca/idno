@@ -13,15 +13,16 @@
         {
 
             public $config = array(
+                'database'          => 'mongodb',
                 'dbstring'          => 'mongodb://localhost:27017',
-                'dbname'            => 'idno', // Default MongoDB database
-                'sessionname'       => 'idno', // Default session name
+                'dbname'            => 'known', // Default MongoDB database
+                'sessionname'       => 'known', // Default session name
                 'open_registration' => true, // Can anyone register for this system?
                 'plugins'           => array( // Default plugins
                                               'Status'
                 ),
                 'items_per_page'    => 10, // Default items per page
-		'experimental'	    => false // A common way to enable experimental functions still in development
+                'experimental'      => false // A common way to enable experimental functions still in development
             );
 
             function init()
@@ -41,6 +42,7 @@
                 if ($config = @parse_ini_file($this->path . '/config.ini')) {
                     $this->config = array_merge($this->config, $config);
                 }
+
                 date_default_timezone_set($this->timezone);
                 setlocale(LC_ALL, 'en_US.UTF8');
             }
@@ -112,7 +114,9 @@
             function load()
             {
                 if ($config = \Idno\Core\site()->db()->getAnyRecord('config')) {
-                    $config = (array)$config;
+                    if ($config instanceof \Idno\Common\Entity) {
+                        $config = $config->getAttributes();
+                    }
                     if (is_array($config)) {
                         $this->config = array_merge($this->config, $config);
                     }
@@ -141,6 +145,7 @@
                 if (empty($this->walled_garden)) {
                     return true;
                 }
+
                 return false;
             }
 

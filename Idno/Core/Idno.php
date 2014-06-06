@@ -13,6 +13,7 @@
         {
 
             public $db;
+            public $filesystem;
             public $config;
             public $session;
             public $template;
@@ -30,7 +31,39 @@
                 self::$site       = $this;
                 $this->dispatcher = new \Symfony\Component\EventDispatcher\EventDispatcher();
                 $this->config     = new Config();
-                $this->db         = new DataConcierge();
+                switch ($this->config->database) {
+                    case 'mongodb':
+                        $this->db = new DataConcierge();
+                        break;
+                    case 'mysql':
+                        $this->db = new \Idno\Data\MySQL();
+                        break;
+                    default:
+                        if (class_exists("Idno\\Data\\{$this->config->database}")) {
+                            $db = "Idno\\Data\\{$this->config->database}";
+                            $this->db = new $db();
+                        }
+                        if (empty($this->db)) {
+                            $this->db = new DataConcierge();
+                        }
+                        break;
+                }
+                switch ($this->config->filesystem) {
+                    case 'local':
+                        $this->filesystem = new \Idno\Files\LocalFileSystem();
+                        break;
+                    default:
+                        if (class_exists("Idno\\Files\\{$this->config->filesystem}")) {
+                            $filesystem = "Idno\\Files\\{$this->config->filesystem}";
+                            $this->filesystem = new $filesystem();
+                        }
+                        if (empty($this->filesystem)) {
+                            if ($fs = $this->db()->getFilesystem()) {
+                                $this->filesystem = $fs;
+                            }
+                        }
+                        break;
+                }
                 $this->config->load();
                 $this->session     = new Session();
                 $this->actions     = new Actions();
@@ -40,7 +73,7 @@
             }
 
             /**
-             * Registers some core Idno page URLs
+             * Registers some core page URLs
              */
             function registerpages()
             {
@@ -56,10 +89,11 @@
                 $this->addPageHandler('/edit/([A-Za-z0-9]+)/?', '\Idno\Pages\Entity\Edit');
                 $this->addPageHandler('/delete/([A-Za-z0-9]+)/?', '\Idno\Pages\Entity\Delete');
                 $this->addPageHandler('/share/?', '\Idno\Pages\Entity\Share');
+                $this->addPageHandler('/bookmarklet\.js', '\Idno\Pages\Entity\Bookmarklet', true);
                 $this->addPageHandler('/[0-9]+/([A-Za-z0-9\-\_]+)/annotations/([A-Za-z0-9]+)/delete/?', '\Idno\Pages\Annotation\Delete'); // Delete annotation
                 $this->addPageHandler('/file/([A-Za-z0-9]+)(/.*)?', '\Idno\Pages\File\View');
-                $this->addPageHandler('/profile/([A-Za-z0-9]+)/?', '\Idno\Pages\User\View');
-                $this->addPageHandler('/profile/([A-Za-z0-9]+)/edit/?', '\Idno\Pages\User\Edit');
+                $this->addPageHandler('/profile/([^\/]+)/?', '\Idno\Pages\User\View');
+                $this->addPageHandler('/profile/([^\/]+)/edit/?', '\Idno\Pages\User\Edit');
                 $this->addPageHandler('/robots\.txt', '\Idno\Pages\Txt\Robots');
                 $this->addPageHandler('/humans\.txt', '\Idno\Pages\Txt\Humans');
                 $this->addPageHandler('/autosave/?', '\Idno\Pages\Entity\Autosave');
@@ -85,6 +119,11 @@
             function &events()
             {
                 return $this->dispatcher;
+            }
+
+            function &filesystem()
+            {
+                return $this->filesystem;
             }
 
             /**
@@ -209,7 +248,8 @@
              * Mark a page handler class as offering public content even on walled garden sites
              * @param $class
              */
-            function addPublicPageHandler($class) {
+            function addPublicPageHandler($class)
+            {
                 if (class_exists($class)) {
                     $this->public_pages[] = $class;
                 }
@@ -219,10 +259,12 @@
              * Retrieve an array of walled garden page handlers
              * @return array
              */
-            function getPublicPageHandlers() {
+            function getPublicPageHandlers()
+            {
                 if (!empty($this->public_pages)) {
                     return $this->public_pages;
                 }
+
                 return [];
             }
 
@@ -231,7 +273,8 @@
              * @param $class
              * @return bool
              */
-            function isPageHandlerPublic($class) {
+            function isPageHandlerPublic($class)
+            {
                 if (!empty($class)) {
                     if (in_array($class, $this->getPublicPageHandlers())) {
                         return true;
@@ -243,6 +286,7 @@
                         }
                     }
                 }
+
                 return false;
             }
 
@@ -319,13 +363,13 @@
                 return '0.1-dev';
             }
 
-	    /**
+            /**
              * Can a specified user (either an explicitly specified user ID
              * or the currently logged-in user if this is left blank) edit
              * this entity?
-	     * 
-	     * In this instance this specifically means "Can a given user create 
-	     * new content or
+             *
+             * In this instance this specifically means "Can a given user create
+             * new content or
              *
              * @param string $user_id
              * @return true|false
@@ -340,28 +384,28 @@
                     $user_id = \Idno\Core\site()->session()->currentUserUUID();
                 }
 
-		if ($user = \Idno\Entities\User::getByUUID($user_id)) {
-		    
-		    // Remote users can't ever create anything :(
-		    if ($user instanceof \Idno\Entities\RemoteUser)
-			return false;
-		    
-		    // But local users can
-		    if ($user instanceof \Idno\Entities\User)
-			return true;
-		    
-		}
+                if ($user = \Idno\Entities\User::getByUUID($user_id)) {
+
+                    // Remote users can't ever create anything :(
+                    if ($user instanceof \Idno\Entities\RemoteUser)
+                        return false;
+
+                    // But local users can
+                    if ($user instanceof \Idno\Entities\User)
+                        return true;
+
+                }
 
                 return false;
             }
-	    
-	    /**
+
+            /**
              * Can a specified user (either an explicitly specified user ID
              * or the currently logged-in user if this is left blank) view
              * this entity?
-	     * 
-	     * Always returns true at the moment, but might be a good way to build
-	     * walled garden functionality.
+             *
+             * Always returns true at the moment, but might be a good way to build
+             * walled garden functionality.
              *
              * @param string $user_id
              * @return true|false

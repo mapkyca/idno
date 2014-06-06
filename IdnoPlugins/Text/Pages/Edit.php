@@ -48,7 +48,7 @@
 
                 if ($object->saveDataFromInput($this)) {
                     (new \Idno\Core\Autosave())->clearContext('entry');
-                    $this->forward($object->getURL());
+                    $this->forward(\Idno\Core\site()->config()->getURL() . 'content/all/');
                 }
 
             }
