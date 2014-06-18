@@ -109,9 +109,15 @@
                                 break;
                             case 'image/png':
                                 $image = imagecreatefrompng($file_path);
+                                $background = imagecolorallocate($image, 0, 0, 0);
+                                imagecolortransparent($image, $background);
+                                imagealphablending($image, false);
+                                imagesavealpha($image, true);
                                 break;
                             case 'image/gif':
                                 $image = imagecreatefromgif($file_path);
+                                $background = imagecolorallocate($image, 0, 0, 0);
+                                imagecolortransparent($image, $background);
                                 break;
                         }
                         if (!empty($image)) {
@@ -146,17 +152,17 @@
                             switch ($photo_information['mime']) {
                                 case 'image/jpeg':
                                     imagejpeg($image_copy, $tmp_dir . '/' . $filename . '.jpg');
-                                    $thumbnail = \Idno\Entities\File::createFromFile($tmp_dir . '/' . $filename . '.jpg', 'thumb.jpg', 'image/jpeg') . '/thumb.jpg';
+                                    $thumbnail = \Idno\Entities\File::createFromFile($tmp_dir . '/' . $filename . '.jpg', "thumb_{$max_dimension}.jpg", 'image/jpeg') . '/thumb.jpg';
                                     @unlink($tmp_dir . '/' . $filename . '.jpg');
                                     break;
                                 case 'image/png':
                                     imagepng($image_copy, $tmp_dir . '/' . $filename . '.png');
-                                    $thumbnail = \Idno\Entities\File::createFromFile($tmp_dir . '/' . $filename . '.png', 'thumb.png', 'image/png') . '/thumb.png';
+                                    $thumbnail = \Idno\Entities\File::createFromFile($tmp_dir . '/' . $filename . '.png', "thumb_{$max_dimension}.png", 'image/png') . '/thumb.png';
                                     @unlink($tmp_dir . '/' . $filename . '.png');
                                     break;
                                 case 'image/gif':
                                     imagegif($image_copy, $tmp_dir . '/' . $filename . '.gif');
-                                    $thumbnail = \Idno\Entities\File::createFromFile($tmp_dir . '/' . $filename . '.gif', 'thumb.gif', 'image/gif') . '/thumb.gif';
+                                    $thumbnail = \Idno\Entities\File::createFromFile($tmp_dir . '/' . $filename . '.gif', "thumb_{$max_dimension}.gif", 'image/gif') . '/thumb.gif';
                                     @unlink($tmp_dir . '/' . $filename . '.gif');
                                     break;
                             }

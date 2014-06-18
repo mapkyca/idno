@@ -17,8 +17,8 @@ Community contributors, by Known release
 
 0.1
 
-* Jesse Vincent http://s.ly
 * Marcus Povey http://marcus-povey.co.uk
+* Jesse Vincent http://s.ly
 * Adrian Goins http://arces.net
 
 How can I contribute?

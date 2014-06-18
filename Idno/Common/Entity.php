@@ -13,7 +13,8 @@
     namespace Idno\Common {
 
         interface EntityInterface extends \JsonSerializable, \ArrayAccess
-        {}
+        {
+        }
 
         class Entity extends Component implements EntityInterface
         {
@@ -413,7 +414,12 @@
                 // Automatically add a slug (if one isn't set and this is a new entity)
 
                 if (!$this->getSlug() && empty($this->_id)) {
-                    $this->setSlugResilient($this->getTitle());
+                    if (!($title = $this->getTitle())) {
+                        if (!($title = $this->getDescription())) {
+                            $title = md5(time() . rand(0,9999));
+                        }
+                    }
+                    $this->setSlugResilient($title);
                 }
 
                 // Automatically set access
@@ -610,6 +616,7 @@
                 $other_results = \Idno\Entities\ActivityStreamPost::get($search);
 
                 $return = array_merge($results, $other_results);
+
                 return $return;
 
             }
@@ -794,6 +801,79 @@
                     return $this->description;
 
                 return '';
+            }
+
+            /**
+             * Retrieves the rendered HTML of this body
+             * @return string
+             */
+            function getBody()
+            {
+                if (!empty($this->body)) {
+                    return $this->body;
+                }
+
+                return '';
+            }
+
+            /**
+             * Get the URIs of all images in this entity's body HTML
+             * @return array
+             */
+            function getImageSourcesFromBody()
+            {
+                $src = [];
+                if ($body = $this->getBody()) {
+                    $doc = new \DOMDocument();
+                    $doc->loadHTML($body);
+                    if ($images = $doc->getElementsByTagName('img')) {
+                        foreach ($images as $image) {
+                            if ($source = $image->getAttribute('src')) {
+                                $src[] = $source;
+                            }
+                        }
+                    }
+                }
+
+                return $src;
+            }
+
+            /**
+             * Gets the URI of the first image in this entity's body HTML
+             * @return bool
+             */
+            function getFirstImageSourceFromBody()
+            {
+                if ($src = $this->getImageSourcesFromBody()) {
+                    return $src[0];
+                }
+
+                return false;
+            }
+
+            /**
+             * Get the time it would take to read this entity's body, in seconds.
+             * @return int
+             */
+            function getReadingTimeInSeconds()
+            {
+                if ($body = $this->getBody()) {
+                    $body  = strip_tags($body);
+                    $words = str_word_count($body);
+
+                    return (int)ceil(($words / 200) * 60);
+                }
+
+                return 0;
+            }
+
+            /**
+             * Get the time it would take to read this entity's body, in minutes.
+             * @return int
+             */
+            function getReadingTimeInMinutes()
+            {
+                return (int)ceil($this->getReadingTimeInSeconds() / 60);
             }
 
             /**
@@ -1462,10 +1542,37 @@
                             $context               = 'rsvp';
                             break;
                     }
-                    $owner->notify($subject, $notification_template, $annotation, $context, $this);
+
+                    if ($annotation['owner_url'] != $this->getOwner()->getURL()) {
+                        $owner->notify($subject, $notification_template, $annotation, $context, $this);
+                    }
                 }
 
                 return true;
+            }
+
+            /**
+             * Determines whether the current user can edit the specified annotation
+             * @param array|string $annotation
+             * @return bool
+             */
+            function canEditAnnotation($annotation)
+            {
+                if ($this->canEdit()) {
+                    return true;
+                }
+                if ($user = \Idno\Core\site()->session()->currentUser()) {
+                    if (!is_array($annotation)) {
+                        $annotation = $this->getAnnotation($annotation);
+                    }
+                    if (!empty($annotation['owner_url'])) {
+                        if ($annotation['owner_url'] == $user->getURL()) {
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
             }
 
             /**
@@ -1536,7 +1643,8 @@
              * @param mixed $offset
              * @return bool
              */
-            function offsetExists($offset) {
+            function offsetExists($offset)
+            {
                 return empty($this->attributes[$offset]);
             }
 
@@ -1545,7 +1653,8 @@
              * @param mixed $offset
              * @return mixed
              */
-            function offsetGet($offset) {
+            function offsetGet($offset)
+            {
                 return $this->attributes[$offset];
             }
 
@@ -1554,7 +1663,8 @@
              * @param mixed $offset
              * @param mixed $value
              */
-            function offsetSet($offset, $value) {
+            function offsetSet($offset, $value)
+            {
                 $this->attributes[$offset] = $value;
             }
 
@@ -1562,7 +1672,8 @@
              * Allows you to unset a property value as you would an array
              * @param mixed $offset
              */
-            function offsetUnset($offset) {
+            function offsetUnset($offset)
+            {
                 unset($this->attributes[$offset]);
             }
 
@@ -1570,7 +1681,8 @@
              * Retrieve this object's stored attributes
              * @return array
              */
-            function getAttributes() {
+            function getAttributes()
+            {
                 return $this->attributes;
             }
 

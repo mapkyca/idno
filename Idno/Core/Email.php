@@ -58,6 +58,15 @@
             }
 
             /**
+             * Adds an email to the BCC list
+             * @param $email
+             * @return mixed
+             */
+            function addBcc($email) {
+                return $this->message->addBcc($email);
+            }
+
+            /**
              * Add a "reply to" message
              * @param $email
              * @param string $name
@@ -147,8 +156,8 @@
 
                     return $mailer->send($this->message);
                 } catch (\Exception $e) {
-                    site()->session()->addMessage("Something went wrong and we couldn't send the email.");
-                    site()->session()->addMessage($e->getMessage());
+                    //site()->session()->addMessage("Something went wrong and we couldn't send the email.");
+                    //site()->session()->addMessage($e->getMessage());
                 }
             }
 
