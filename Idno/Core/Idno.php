@@ -40,7 +40,7 @@
                         break;
                     default:
                         if (class_exists("Idno\\Data\\{$this->config->database}")) {
-                            $db = "Idno\\Data\\{$this->config->database}";
+                            $db       = "Idno\\Data\\{$this->config->database}";
                             $this->db = new $db();
                         }
                         if (empty($this->db)) {
@@ -55,7 +55,7 @@
                         break;
                     default:
                         if (class_exists("Idno\\Files\\{$this->config->filesystem}")) {
-                            $filesystem = "Idno\\Files\\{$this->config->filesystem}";
+                            $filesystem       = "Idno\\Files\\{$this->config->filesystem}";
                             $this->filesystem = new $filesystem();
                         }
                         if (empty($this->filesystem)) {
@@ -100,6 +100,7 @@
                 $this->addPageHandler('/humans\.txt', '\Idno\Pages\Txt\Humans');
                 $this->addPageHandler('/autosave/?', '\Idno\Pages\Entity\Autosave');
                 $this->addPageHandler('/search/?', '\Idno\Pages\Search\Forward');
+                $this->addPageHandler('/search/mentions\.json', '\Idno\Pages\Search\Mentions');
 
             }
 
