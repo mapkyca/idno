@@ -1,7 +1,7 @@
 body {
     background: #fff;
-    margin-top:64px;
-    padding-top: 0;
+    /*margin-top:64px;*/
+    /*padding-top: 0;*/
     margin-bottom: 5em;
 }
 
@@ -16,8 +16,8 @@ a {
 li {
     line-height: 1.8em !important;
 }
-.entry-content .p-name a,
-.idno-posts h2.p-name {
+/*.entry-content .p-name a,*/
+.idno-entry h2 {
     font-size: 1.8em;
     margin: 0; padding: 0;
 }

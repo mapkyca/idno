@@ -37,7 +37,13 @@
                 } else {
                     header('Content-type: application/data');
                 }
-                echo $object->getBytes();
+                //header('Accept-Ranges: bytes');
+                //header('Content-Length: ' . filesize($object->getSize()));
+                if (is_callable([$object,'passThroughBytes'])) {
+                    $object->passThroughBytes();
+                } else {
+                    echo $object->getBytes();
+                }
 
             }
 

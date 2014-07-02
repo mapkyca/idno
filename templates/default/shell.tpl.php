@@ -78,6 +78,11 @@
     <link href="<?= \Idno\Core\site()->config()->url ?>webmention/" rel="webmention"/>
 
     <link type="text/plain" rel="author" href="<?= \Idno\Core\site()->config()->url ?>humans.txt"/>
+    
+    <?php if (!empty(\Idno\Core\site()->config()->hub)) { ?>
+    <!-- Pubsubhubbub -->
+    <link href="<?= \Idno\Core\site()->config()->hub ?>" rel="hub" />
+    <?php } ?>
 
     <?php
         // Load style assets
@@ -101,7 +106,7 @@
 
 <body>
 <?php endif; ?>
-<div id="pjax-container">
+<div id="pjax-container" class="page-container">
     <?php
         $currentPage = \Idno\Core\site()->currentPage();
 
@@ -184,8 +189,12 @@
 
     </div>
     <!-- /container -->
+
+    <?= $this->draw('shell/contentfooter') ?>
+
 </div>
-<!-- pjax-container -->
+<!-- Everything below this should be includes, not content -->
+
 <?php if (!$_SERVER["HTTP_X_PJAX"]): ?>
 <!-- Le javascript -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -195,6 +204,14 @@
 <script src="<?= \Idno\Core\site()->config()->url . 'external/underscore/underscore-min.js' ?>" type="text/javascript"></script>
 <script src="<?= \Idno\Core\site()->config()->url . 'external/mention/bootstrap-typeahead.js' ?>" type="text/javascript"></script>
 <script src="<?= \Idno\Core\site()->config()->url . 'external/mention/mention.js' ?>" type="text/javascript"></script>
+
+<!-- Flexible media player -->
+<script src="<?=\Idno\Core\site()->config()->getURL()?>external/mediaelement/build/mediaelement-and-player.min.js"></script>
+<link rel="stylesheet" href="<?=\Idno\Core\site()->config()->getURL()?>external/mediaelement/build/mediaelementplayer.css" />
+
+<!-- WYSIWYG editor -->
+<script src="<?=\Idno\Core\site()->config()->url?>external/peneditor/src/pen.js"></script>
+<link rel="stylesheet" href="<?=\Idno\Core\site()->config()->getURL()?>external/peneditor/src/pen.css">
 
 <!-- Mention styles -->
 <link rel="stylesheet" type="text/css" href="<?= \Idno\Core\site()->config()->url ?>external/mention/recommended-styles.css">
@@ -241,6 +258,27 @@
         annotateContent();
     });
 
+    /**  
+     * Better handle links in iOS web applications.
+     * This code (from the discussion here: https://gist.github.com/kylebarrow/1042026)
+     * will prevent internal links being opened up in safari when known is installed
+     * on an ios home screen.
+     */
+    (function(document,navigator,standalone) {
+            if ((standalone in navigator) && navigator[standalone]) {
+                var curnode, location=document.location, stop=/^(a|html)$/i;
+                document.addEventListener('click', function(e) {
+                    curnode=e.target;
+                    while (!(stop).test(curnode.nodeName)) {
+                        curnode=curnode.parentNode;
+                    }
+                    if('href' in curnode && ( curnode.href.indexOf('http') || ~curnode.href.indexOf(location.host) ) && (!curnode.classList.contains('contentTypeButton'))) {
+                        e.preventDefault();
+                        location.href = curnode.href;
+                    }
+                },false);
+            }
+        })(document,window.navigator,'standalone');
 
 </script>
 

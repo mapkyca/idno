@@ -49,3 +49,9 @@
 [submodule "external/mention"]
 	path = external/mention
 	url = https://github.com/jakiestfu/Mention.js.git
+[submodule "external/mediaelement"]
+	path = external/mediaelement
+	url = https://github.com/johndyer/mediaelement.git
+[submodule "external/peneditor"]
+	path = external/peneditor
+	url = https://github.com/sofish/pen.git
