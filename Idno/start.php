@@ -7,6 +7,30 @@
      * @subpackage core
      */
 
+// Put an end to WSODs! 
+    register_shutdown_function(function () {
+        $error = error_get_last();
+        if ($error["type"] == E_ERROR) {
+
+            ob_clean();
+
+            http_response_code(500);
+
+            $error_message = "Fatal Error: {$error['file']}:{$error['line']} - \"{$error['message']}\", on page {$_SERVER['SERVER_NAME']}{$_SERVER['REQUEST_URI']}";
+
+            echo "<h1>Oh no! Known experienced a problem!</h1>";
+            echo "<p>Known experienced a problem with this page and couldn't continue. The technical details are as follows:</p>";
+            echo "<pre>$error_message</pre>";
+            echo "<p>We've logged this error and will make sure we take a look.</p>";
+            echo "<p>If you like, you can <a href=\"mailto:hello@withknown.com?subject=" .
+                rawurlencode("Fatal error in Known install at {$_SERVER['SERVER_NAME']}{$_SERVER['REQUEST_URI']}") . "&body=" . rawurlencode($error_message) . "\">email us for more information</a>.";
+
+            error_log($error_message);
+
+            exit;
+        }
+    });
+
 // We're making heavy use of the Symfony ClassLoader to load our classes
     require_once(dirname(dirname(__FILE__)) . '/external/Symfony/Component/ClassLoader/UniversalClassLoader.php');
     $loader = new \Symfony\Component\ClassLoader\UniversalClassLoader();
@@ -45,9 +69,9 @@
 // Not sure if this is the way we should be initializing everything yet.
 // TODO: do this more intelligently.
 
-    $idno       = new Idno\Core\Idno();
-    $account    = new Idno\Core\Account();
-    $admin      = new Idno\Core\Admin();
-    $webfinger  = new Idno\Core\Webfinger();
-    $webmention = new Idno\Core\Webmention();
+    $idno         = new Idno\Core\Idno();
+    $account      = new Idno\Core\Account();
+    $admin        = new Idno\Core\Admin();
+    $webfinger    = new Idno\Core\Webfinger();
+    $webmention   = new Idno\Core\Webmention();
     $pubsubhubbub = new Idno\Core\PubSubHubbub();
