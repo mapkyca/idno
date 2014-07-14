@@ -2,7 +2,7 @@
 
     <div class="span8 offset2">
         <h3 class="register">
-            Welcome!  
+            Hello there!  
         </h3>
         <h4 class="register">Create a new account to get started.</h4>
         <div class="hero-unit">
@@ -15,7 +15,7 @@
                     <!--<small>The name other people will see.</small>-->
                     </label>
                     <div class="controls">
-                        <input type="text" id="inputName" placeholder="Henri Mattise" class="span4" name="name" value="">
+                        <input type="text" id="inputName" placeholder="Henri Matisse" class="span4" name="name" value="">
                     </div>
                 </div>
                 <div class="control-group">

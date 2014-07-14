@@ -23,12 +23,21 @@
                     if (!empty(\Idno\Core\site()->config()->dbport)) {
                         $connection_string .= ';port=' . \Idno\Core\site()->config()->dbport;
                     }
-                    $this->client = new \PDO($connection_string, \Idno\Core\site()->config()->dbpass);
+                    $this->client = new \PDO($connection_string, \Idno\Core\site()->config()->dbuser, \Idno\Core\site()->config()->dbpass);
                     $this->client->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
                     //$this->client->setAttribute(\PDO::ATTR_EMULATE_PREPARES, false);
                 } catch (\Exception $e) {
-                    echo '<p>Unfortunately we couldn\'t connect to the database:</p><p>' . $e->getMessage() . '</p>';
-                    exit;
+                    if (!empty(\Idno\Core\site()->config()->forward_on_empty)) {
+                        header('Location: ' . \Idno\Core\site()->config()->forward_on_empty);
+                        exit;
+                    } else {
+                        echo '<p>Unfortunately we couldn\'t connect to the database.</p>';
+                        if (\Idno\Core\site()->config()->debug) {
+                            echo '<p>' . $e->getMessage() . '</p>';
+                            echo '<p>'.$connection_string.'</p>';
+                        }
+                        exit;
+                    }
                 }
 
                 $this->database = \Idno\Core\site()->config()->dbname;

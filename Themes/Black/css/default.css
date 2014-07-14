@@ -19,8 +19,13 @@ p a:hover, p a:focus {
 	color: #8cbf99;
 }
 
+.profile h1 a {
+	color: #000000;
+	font-weight: 600;
+}
+
 h2 {
-    line-height: 0.8em;
+    line-height: 1.1em;
     margin-bottom: 0.8em !important;
 }
 
@@ -28,6 +33,11 @@ h2 a {
 	font-family: "Proxima Nova","Open Sans","Gill Sans MT","Gill Sans",Corbel,Arial,sans-serif;
 	font-weight: 600;
 	color: #000000;
+}
+
+.welcome {
+	font-size: 36px;
+	font-weight: 600;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -68,6 +78,7 @@ h5.p-bookmark a:hover, h5.p-bookmark a:focus {
     padding: 0;
     font-weight: 600;
     font-family: "Proxima Nova","Open Sans","Gill Sans MT","Gill Sans",Corbel,Arial,sans-serif;
+    line-height: 1.1em;
 }
 
 h5.h-geo a {
@@ -290,7 +301,7 @@ blockquote {
 	background-color: #FFFFFF;
 	box-shadow: none;
 	background-image: none;
-	font-color: #000000;
+	color: #000000;
 	text-shadow: none;
 	margin-top: 10px;
 	margin-bottom: 10px;
@@ -303,7 +314,7 @@ blockquote {
 	border-color: #73b2e3;
 	box-shadow: none;
 	background-image: none;
-	font-color: #FFFFFF;
+	color: #FFFFFF;
 	text-shadow: none;
 }
 
@@ -330,12 +341,73 @@ label, input, button, select, textarea {
 	text-shadow: none;
 }
 
+.btn-save {
+	background-color: #FFFFFF;
+	box-shadow: none;
+	background-image: none;
+	color: #000000;
+	text-shadow: none;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #000000;
+	border: 2px solid #000000; 
+}
+
+.btn-save:hover, .btn-save:active, .btn-save:focus {
+	background-color: #73b2e3;
+	border-color: #73b2e3;
+	box-shadow: none;
+	background-image: none;
+	color: #FFFFFF;
+	text-shadow: none;
+}
+
+.btn-signin {
+	background-color: #FFFFFF;
+	box-shadow: none;
+	background-image: none;
+	color: #000000;
+	text-shadow: none;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #000000;
+	border: 2px solid #000000; 	
+}
+
+.btn-signin:hover, .btn-signin:active, .btn-signin:focus {
+	background-color: #73b2e3;
+	border-color: #73b2e3;
+	box-shadow: none;
+	background-image: none;
+	color: #FFFFFF;
+	text-shadow: none;
+}
+
 .note {
 	margin-top: 10px;
 }
 
 textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
 	box-shadow: none;
+}
+
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+	border-radius: 0px;
+}
+
+.well {
+	margin-top: 5px;
+	background-color: #FFFFFF;
+	border: none;
+	box-shadow: none;
+	padding-left: 0;
+	padding-right: 0;
+	padding-top: 20px;
+}
+
+.hero-unit {
+	background-color: #FFFFFF;
+	padding: 30px;
 }
 
 /* * {

@@ -1,13 +1,13 @@
 <?php
 
     /**
-     * idno loader and all-purpose conductor
+     * Known loader and all-purpose conductor
      *
      * @package idno
      * @subpackage core
      */
 
-// Put an end to WSODs! 
+// Register a function to catch premature shutdowns and output some friendlier text
     register_shutdown_function(function () {
         $error = error_get_last();
         if ($error["type"] == E_ERROR) {
@@ -40,9 +40,9 @@
 // idno trunk classes (i.e., the main framework) are in /idno
     $loader->registerNamespace('Idno', dirname(dirname(__FILE__)));
 // idno plugins are located in /IdnoPlugins and must have their own namespace
-    $loader->registerNamespace('IdnoPlugins', dirname(dirname(__FILE__)));
+    $loader->registerNamespace('IdnoPlugins', [dirname(dirname(__FILE__)), dirname(dirname(__FILE__)) . '/hosts/' . $_SERVER['HTTP_HOST']]);
 // idno themes are located in /Themes and must have their own namespace
-    $loader->registerNamespace('Themes', dirname(dirname(__FILE__)));
+    $loader->registerNamespace('Themes', [dirname(dirname(__FILE__)), dirname(dirname(__FILE__)) . '/hosts/' . $_SERVER['HTTP_HOST']]);
 
 // Register our external namespaces (PSR-0 compliant modules that we love, trust and need)
 
