@@ -46,7 +46,7 @@
                 $this->loadIniFiles();
 
                 if ($this->multitenant) {
-                    $dbname = $this->dbname;
+                    $dbname       = $this->dbname;
                     $this->dbname = preg_replace('/[^\da-z]/i', '', $this->host);
                     if (empty($this->dbname)) {
                         $this->dbname = $dbname;
@@ -68,19 +68,26 @@
             {
 
                 if (empty($this->ini_config)) {
+                    $this->ini_config = [];
                     if ($config = @parse_ini_file($this->path . '/config.ini')) {
-                        $this->ini_config = array_merge($this->ini_config, $config);
+                        $this->ini_config = array_merge($config, $this->ini_config);
                     }
                     // Per domain configuration
                     if ($config = @parse_ini_file($this->path . '/' . $this->host . '.ini')) {
-                        $this->ini_config = array_merge($this->ini_config, $config);
+                        $this->ini_config = array_merge($config, $this->ini_config);
+                    }
+                    if (file_exists($this->path . '/config.json')) {
+                        if ($json = file_get_contents($this->path . '/config.json')) {
+                            if ($json = json_decode($json, true)) {
+                                $this->ini_config = array_merge($json, $this->ini_config);
+                            }
+                        }
                     }
                 }
 
                 if (!empty($this->ini_config)) {
                     $this->config = array_merge($this->config, $this->ini_config);
                 }
-
 
             }
 
@@ -131,6 +138,11 @@
             {
                 $array = $this->config;
                 unset($array['dbname']); // Don't save database access info to the database
+                unset($array['path']); // Don't save the file path to the database
+                unset($array['url']); // Don't save the URL to the database
+                unset($array['host']); // Don't save the host to the database
+                unset($array['feed']); // Don't save the feed URL to the database
+                unset($array['uploadpath']); // Don't save the upload path to the database
 
                 // If we don't have a site secret, create it
                 if (!isset($array['site_secret']))
@@ -154,6 +166,12 @@
                 if ($config = \Idno\Core\site()->db()->getAnyRecord('config')) {
                     if ($config instanceof \Idno\Common\Entity) {
                         $config = $config->getAttributes();
+                        unset($config['dbname']); // Ensure we don't accidentally load protected data from db
+                        unset($config['path']);
+                        unset($config['url']);
+                        unset($config['host']);
+                        unset($config['feed']);
+                        unset($config['uploadpath']);
                     }
                     if (is_array($config)) {
                         $this->config = array_merge($this->config, $config);

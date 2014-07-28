@@ -112,6 +112,20 @@
 <body class="<?php
 
     echo (str_replace('\\','_',strtolower(get_class(\Idno\Core\site()->currentPage()))));
+    if ($path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)) {
+        if ($path = explode('/',$path)) {
+            $page_class = '';
+            foreach($path as $element) {
+                if (!empty($element)) {
+                    if (!empty($page_class)) {
+                        $page_class .= '-';
+                    }
+                    $page_class .= $element;
+                    echo ' page-' . $page_class;
+                }
+            }
+        }
+    }
 
 ?>">
 <?php endif; ?>
@@ -172,7 +186,7 @@
         } // End hidenav test
     ?>
 
-    <div class="container">
+    <div class="container page-body">
 
         <?php
 
@@ -223,8 +237,8 @@
       href="<?= \Idno\Core\site()->config()->getURL() ?>external/mediaelement/build/mediaelementplayer.css"/>
 
 <!-- WYSIWYG editor -->
-<script src="<?= \Idno\Core\site()->config()->url ?>external/peneditor/src/pen.js"></script>
-<link rel="stylesheet" href="<?= \Idno\Core\site()->config()->getURL() ?>external/peneditor/src/pen.css">
+<link href="<?=\Idno\Core\site()->config()->getURL()?>external/summernote/dist/summernote.css" rel="stylesheet">
+<script src="<?=\Idno\Core\site()->config()->getURL()?>external/summernote/dist/summernote.min.js"></script>
 
 <!-- Mention styles -->
 <link rel="stylesheet" type="text/css"

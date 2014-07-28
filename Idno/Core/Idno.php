@@ -9,6 +9,8 @@
 
     namespace Idno\Core {
 
+        use Idno\Entities\User;
+
         class Idno extends \Idno\Common\Component
         {
 
@@ -82,6 +84,8 @@
                 $this->syndication = new Syndication();
                 $this->plugins     = new Plugins(); // This must be loaded last
                 $this->themes      = new Themes();
+
+                User::registerEvents();
             }
 
             /**
@@ -90,27 +94,51 @@
             function registerpages()
             {
 
+                /** Homepage */
+                $this->addPageHandler('', '\Idno\Pages\Homepage');
                 $this->addPageHandler('/', '\Idno\Pages\Homepage');
                 $this->addPageHandler('/content/([A-Za-z\-\/]+)+', '\Idno\Pages\Homepage');
+
+                /** Individual entities / posting / deletion */
                 $this->addPageHandler('/view/([A-Za-z0-9]+)/?', '\Idno\Pages\Entity\View');
-                $this->addPageHandler('/view/([A-Za-z0-9]+)/annotations/([A-Za-z0-9]+)?', '\Idno\Pages\Annotation\View');
                 $this->addPageHandler('/s/([A-Za-z0-9]+)/?', '\Idno\Pages\Entity\Shortlink');
                 $this->addPageHandler('/[0-9]+/([A-Za-z0-9\-\_]+)/?', '\Idno\Pages\Entity\View');
-                $this->addPageHandler('/[0-9]+/([A-Za-z0-9\-\_]+)/annotations/([A-Za-z0-9]+)?', '\Idno\Pages\Annotation\View');
                 $this->addPageHandler('/edit/([A-Za-z0-9]+)/?', '\Idno\Pages\Entity\Edit');
                 $this->addPageHandler('/delete/([A-Za-z0-9]+)/?', '\Idno\Pages\Entity\Delete');
-                $this->addPageHandler('/share/?', '\Idno\Pages\Entity\Share');
-                $this->addPageHandler('/bookmarklet\.js', '\Idno\Pages\Entity\Bookmarklet', true);
+                $this->addPageHandler('/withdraw/([A-Za-z0-9]+)/?', '\Idno\Pages\Entity\Withdraw');
+
+                /** Annotations */
+                $this->addPageHandler('/view/([A-Za-z0-9]+)/annotations/([A-Za-z0-9]+)?', '\Idno\Pages\Annotation\View');
+                $this->addPageHandler('/[0-9]+/([A-Za-z0-9\-\_]+)/annotations/([A-Za-z0-9]+)?', '\Idno\Pages\Annotation\View');
                 $this->addPageHandler('/[0-9]+/([A-Za-z0-9\-\_]+)/annotations/([A-Za-z0-9]+)/delete/?', '\Idno\Pages\Annotation\Delete'); // Delete annotation
                 $this->addPageHandler('/annotation/post/?', '\Idno\Pages\Annotation\Post');
+
+                /** Bookmarklets and sharing */
+                $this->addPageHandler('/share/?', '\Idno\Pages\Entity\Share');
+                $this->addPageHandler('/bookmarklet\.js', '\Idno\Pages\Entity\Bookmarklet', true);
+
+                /** Files */
                 $this->addPageHandler('/file/([A-Za-z0-9]+)(/.*)?', '\Idno\Pages\File\View', true);
+
+                /** Users */
                 $this->addPageHandler('/profile/([^\/]+)/?', '\Idno\Pages\User\View');
                 $this->addPageHandler('/profile/([^\/]+)/edit/?', '\Idno\Pages\User\Edit');
-                $this->addPageHandler('/robots\.txt', '\Idno\Pages\Txt\Robots');
-                $this->addPageHandler('/humans\.txt', '\Idno\Pages\Txt\Humans');
-                $this->addPageHandler('/autosave/?', '\Idno\Pages\Entity\Autosave');
+
+                /** Search */
                 $this->addPageHandler('/search/?', '\Idno\Pages\Search\Forward');
                 $this->addPageHandler('/search/mentions\.json', '\Idno\Pages\Search\Mentions');
+
+                /** robots.txt / humans.txt */
+                $this->addPageHandler('/robots\.txt', '\Idno\Pages\Txt\Robots');
+                $this->addPageHandler('/humans\.txt', '\Idno\Pages\Txt\Humans');
+
+                /** Autosave / preview */
+                $this->addPageHandler('/autosave/?', '\Idno\Pages\Entity\Autosave');
+
+                /** Installation / first use */
+                $this->addPageHandler('/begin/?', '\Idno\Pages\Onboarding\Begin',true);
+                $this->addPageHandler('/begin/register/?', '\Idno\Pages\Onboarding\Register',true);
+                $this->addPageHandler('/begin/profile/?', '\Idno\Pages\Onboarding\Profile');
 
             }
 
@@ -149,14 +177,14 @@
              *
              * @param string $eventName The name of the event to trigger
              * @param array $data Data to pass to the event
-	     * @param mixed $default Default response (if not forwarding)
+             * @param mixed $default Default response (if not forwarding)
              * @return mixed
              */
 
             function triggerEvent($eventName, $data = array(), $default = true)
             {
                 $event = new Event($data);
-		$event->setResponse($default);
+                $event->setResponse($default);
                 $this->events()->dispatch($eventName, $event);
                 if (!$event->forward()) {
                     return $event->response();

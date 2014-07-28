@@ -29,6 +29,13 @@
                 parent::__construct();
                 $this->owner = false;
 
+            }
+
+            /**
+             * Register user-related events
+             */
+            static function registerEvents() {
+
                 // Hook to add user data to webfinger
                 \Idno\Core\site()->addEventHook('webfinger', function (\Idno\Core\Event $event) {
 
@@ -680,6 +687,9 @@
 
                 if (!$this->canEdit()) return false;
                 $this->profile = \Idno\Core\site()->currentPage()->getInput('profile');
+                if ($name = \Idno\Core\site()->currentPage()->getInput('name')) {
+                    $this->name = $name;
+                }
                 if (!empty($_FILES['avatar'])) {
                     if (in_array($_FILES['avatar']['type'], array('image/png', 'image/jpg', 'image/jpeg', 'image/gif'))) {
                         if (getimagesize($_FILES['avatar']['tmp_name'])) {
