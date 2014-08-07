@@ -108,13 +108,18 @@
              *
              * @param string $templateName
              * @param string $extensionTemplateName
+             * @param bool $to_front If set, this will add the template to the beginning of the template queue
              */
-            function extendTemplate($templateName, $extensionTemplateName)
+            function extendTemplate($templateName, $extensionTemplateName, $to_front = false)
             {
                 if (empty($this->extensions[$templateName])) {
                     $this->extensions[$templateName] = [];
                 }
-                $this->extensions[$templateName][] = $extensionTemplateName;
+                if ($to_front) {
+                    array_unshift($this->extensions[$templateName], $extensionTemplateName);
+                } else {
+                    $this->extensions[$templateName][] = $extensionTemplateName;
+                }
             }
 
             /**
@@ -186,6 +191,26 @@
                 }, $text);
 
                 return $r;
+            }
+
+            /**
+             * Given a URL, fixes it to have a prefix if it needs one
+             * @param $url
+             * @return string
+             */
+            function fixURL($url) {
+                return (
+                    substr($url, 0, 7) == 'http://' ||
+                    substr($url, 0, 8) == 'https://' ||
+                    substr($url, 0, 1) == '@' ||
+                    substr($url, 0, 7) == 'mailto:' ||
+                    substr($url, 0, 4) == 'tel:' ||
+                    substr($url, 0, 4) == 'sms:' ||
+                    substr($url, 0, 6) == 'skype:' ||
+                    substr($url, 0, 5) == 'xmpp:'
+                )
+                    ? $url
+                    : 'http://'.$url;
             }
 
             /**

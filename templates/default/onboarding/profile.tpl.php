@@ -1,8 +1,13 @@
+<div id="bg">
+    <img src="<?=\Idno\Core\site()->config()->getURL()?>gfx/onboarding/sky.jpg" alt="">
+</div>
 <div id="form-main">
     <div id="form-div">
         <h2 class="profile">Share something about yourself</h2>
 
         <p>Don't worry, you can change this anytime.</p>
+
+        <?=$this->draw('shell/simple/messages')?>
 
         <form action="<?=$vars['user']->getURL()?>" method="post" enctype="multipart/form-data">
 
@@ -19,13 +24,13 @@
             </div>
             <p class="name">
                 <label class="control-label" for="inputName">Your name<br/></label>
-                <input name="name" type="text" class="profile-input" placeholder="Henri Matisse" id="name"/>
+                <input name="name" type="text" class="profile-input" placeholder="Joe Montgolfier" id="name"/>
             </p>
 
             <p class="text">
                 <label class="control-label" for="inputName">What's special about you?<br/></label>
                 <textarea name="profile[description]" class="profile-input" id="description"
-                          placeholder="I like to paint..."></textarea>
+                          placeholder="I fly hot air balloons..."></textarea>
             </p>
 
             <p class="website">
@@ -38,8 +43,8 @@
 
             <div class="submit">
                 <?= \Idno\Core\site()->actions()->signForm('/profile/' . $vars['user']->getHandle()) ?>
-                <input type="submit" value="Save Profile" id="button-profile"/>
-                <div class="ease"></div>
+                <input type="submit" value="Save profile" class="btn btn-reg"/>
+                <input type="hidden" name="onboarding" value="1"/>
             </div>
         </form>
         <div id="website-template" style="display:none"><input name="profile[url][]" type="url" class="profile-input" id="website" placeholder="http://..."/></div>

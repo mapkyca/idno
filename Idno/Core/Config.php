@@ -19,7 +19,11 @@
                 'sessionname'       => 'known', // Default session name
                 'open_registration' => true, // Can anyone register for this system?
                 'plugins'           => array( // Default plugins
-                                              'Status'
+                                              'Status',
+                                              'Text',
+                                              'Photo',
+                                              'Like',
+                                              'Checkin'
                 ),
                 'themes'            => [],
                 'items_per_page'    => 10, // Default items per page
@@ -47,7 +51,8 @@
 
                 if ($this->multitenant) {
                     $dbname       = $this->dbname;
-                    $this->dbname = preg_replace('/[^\da-z]/i', '', $this->host);
+                    $this->host   = str_replace('www.', '', $this->host);
+                    $this->dbname = preg_replace('/[^\da-z\.]/i', '', $this->host);
                     if (empty($this->dbname)) {
                         $this->dbname = $dbname;
                     }

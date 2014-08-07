@@ -1,30 +1,81 @@
-
-html{    background:url(../gfx/onboarding/background_blur.png) no-repeat;
-    background-size: cover;
+html{
     height:100%;
+    min-height:100%;
+}
+body{
+    min-height:100%;
 }
 
-#feedback-page{
-    text-align:center;
+body.page-begin {
+    background: url(../gfx/onboarding/airballoon.jpg) no-repeat center center fixed;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    height: 100%;
+    overflow: auto;
 }
 
-#form-main{
-    width:100%;
-    float:left;
-    padding-top:0px;
+/** Testing whitespace problem in iOS **/
+body.page-begin-connect,
+body.page-begin-profile,
+body.page-begin-register {
+    background: url(../gfx/onboarding/sky.jpg) no-repeat center center fixed;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    height: 100%;
+    overflow: auto;
+}
+
+@media only screen and (max-width: 500px) {
+    #bg {
+        position: fixed;
+        top: -25%;
+        left: -25%;
+        width: 150%;
+        height: 150%;
+    }
+        #bg img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        min-width: 100%;
+        min-height: 100%;
+    }
+}
+
+@media only screen and (min-width: 501px) {
+    #bg {
+        display: none;
+    }
+}
+
+#feedback-page {
+    text-align: center;
+}
+
+#form-main {
+    width: 100%;
+    float: left;
+    padding-top: 0px;
 }
 
 #form-div {
-    background-color:rgba(72,72,72,0.6);
-    padding-left:25px;
-    padding-right:25px;
-    padding-top:5px;
-    padding-bottom:20px;
+    background-color: rgba(75, 85, 115, 0.4);
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 5px;
+    padding-bottom: 20px;
     width: 450px;
     float: left;
     left: 50%;
     position: absolute;
-    margin-top:20px;
+    margin-top: 20px;
     margin-left: -260px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -32,15 +83,15 @@ html{    background:url(../gfx/onboarding/background_blur.png) no-repeat;
 }
 
 #form-reg {
-    padding-left:25px;
-    padding-right:25px;
-    padding-top:5px;
-    padding-bottom:20px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 5px;
+    padding-bottom: 20px;
     width: 550px;
     float: left;
     left: 50%;
     position: absolute;
-    margin-top:20px;
+    margin-top: 20px;
     margin-left: -310px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
@@ -49,7 +100,7 @@ html{    background:url(../gfx/onboarding/background_blur.png) no-repeat;
 
 .feedback-input {
     color:#777777;
-    font-family: 'Raleway', Helvetica, sans-serif;
+    font-family: 'Pontano Sans',Verdana,Helvetica,sans-serif;
     font-weight:500;
     font-size: 16px;
     border-radius: 5px;
@@ -58,15 +109,15 @@ html{    background:url(../gfx/onboarding/background_blur.png) no-repeat;
     padding: 10px 10px 10px 54px;
     margin-bottom: 5px;
     margin-top: 2px;
-    width:100%;
+    width: 100%;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
     box-sizing: border-box;
-    border: 3px solid rgba(0,0,0,0);
+    border: 3px solid rgba(0, 0, 0, 0);
 }
 
-.feedback-input:focus{
+.feedback-input:focus {
     background: #fff;
     box-shadow: 0;
     border: 3px solid #4c93cb;
@@ -76,9 +127,9 @@ html{    background:url(../gfx/onboarding/background_blur.png) no-repeat;
 }
 
 .website-input {
-    color:#333333;
-    font-family: 'Pontano Sans',Verdana,Helvetica,sans-serif;
-    font-weight:500;
+    color: #333333;
+    font-family: 'Pontano Sans', Verdana, Helvetica, sans-serif;
+    font-weight: 500;
     font-size: 16px;
     border-radius: 5px;
     line-height: 18px;
@@ -86,15 +137,15 @@ html{    background:url(../gfx/onboarding/background_blur.png) no-repeat;
     padding: 10px 10px 10px 10px;
     margin-bottom: 5px;
     margin-top: 2px;
-    width:100%;
+    width: 100%;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
     box-sizing: border-box;
-    border: 3px solid rgba(0,0,0,0);
+    border: 3px solid rgba(0, 0, 0, 0);
 }
 
-.website-input:focus{
+.website-input:focus {
     background: #fff;
     box-shadow: 0;
     border: 3px solid #4c93cb;
@@ -104,9 +155,9 @@ html{    background:url(../gfx/onboarding/background_blur.png) no-repeat;
 }
 
 .profile-input {
-    color:#777777;
-    font-family: 'Raleway', Helvetica, sans-serif;
-    font-weight:500;
+    color: #777777;
+    font-family: 'Pontano Sans', Verdana, Helvetica, sans-serif;
+    font-weight: 500;
     font-size: 16px;
     border-radius: 5px;
     line-height: 18px;
@@ -114,15 +165,15 @@ html{    background:url(../gfx/onboarding/background_blur.png) no-repeat;
     padding: 10px 10px 10px 10px;
     margin-bottom: 5px;
     margin-top: 2px;
-    width:100%;
+    width: 100%;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -ms-box-sizing: border-box;
     box-sizing: border-box;
-    border: 3px solid rgba(0,0,0,0);
+    border: 3px solid rgba(0, 0, 0, 0);
 }
 
-.profile-input:focus{
+.profile-input:focus {
     background: #fff;
     box-shadow: 0;
     border: 3px solid #4c93cb;
@@ -136,8 +187,8 @@ html{    background:url(../gfx/onboarding/background_blur.png) no-repeat;
 }
 
 h1 {
-    font-family: 'Raleway', Helvetica, sans-serif;
-    font-size: 	2.0em;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 2.0em;
     font-weight: 700;
     color: #FFFFFF;
     padding-bottom: 1px;
@@ -147,18 +198,19 @@ h1 {
 }
 
 .p-register {
-    margin-bottom: 150px;
+    margin-bottom: 80px;
     margin-top: 40px;
     text-align: center;
     padding-left: 15px;
     padding-right: 15px;
+    font-size: 1.5em;
 }
 
 p {
     padding-bottom: 1px;
     padding-top: 1px;
     font-family: 'Pontano Sans', Verdana, Helvetica, sans-serif;
-    font-size: 	18px;
+    font-size: 18px;
     font-weight: 400;
     color: #FFFFFF;
     margin-top: 10px;
@@ -170,9 +222,9 @@ p {
     margin-bottom: 30px;
 }
 
-.focused{
-    color:#30aed6;
-    border:#30aed6 solid 3px;
+.focused {
+    color: #30aed6;
+    border: #30aed6 solid 3px;
 }
 
 .submit {
@@ -187,11 +239,13 @@ p {
     margin-bottom: 10px;
     margin-top: 10px;
     text-shadow: none;
-    font-family: 'Raleway', Helvetica, sans-serif;
+    font-family: 'Pontano Sans', Verdana, Helvetica, sans-serif;
     font-weight: 700;
     font-size: 1.5em;
     box-shadow: 0 5px #357ebd;
-    width: 80%;
+    -webkit-box-shadow: 0 5px #357ebd;
+    width: 100%;
+    -webkit-appearance: none;
 }
 
 .btn-reg:hover, .btn-reg:focus {
@@ -208,11 +262,13 @@ p {
     margin-bottom: 10px;
     margin-top: 10px;
     text-shadow: none;
-    font-family: 'Raleway', Helvetica, sans-serif;
+    font-family: 'Pontano Sans', Verdana, Helvetica, sans-serif;
     font-weight: 700;
     font-size: 1.5em;
     box-shadow: 0 5px #535353;
-    width: 80%;
+    -webkit-box-shadow: 0 5px #535353;
+    width: 100%;
+    -webkit-appearance: none;
 }
 
 .btn-login:hover, .btn-login:focus {
@@ -234,10 +290,11 @@ p {
     line-height: 24px;
     padding: 15px 65px;
     text-align: center;
+    -webkit-appearance: none;
 }
 
 @media only screen and (max-width: 580px) {
-    #form-div{
+    #form-div {
         left: 3%;
         margin-right: 3%;
         width: 88%;
@@ -245,7 +302,8 @@ p {
         padding-left: 3%;
         padding-right: 3%;
     }
-    #form-reg{
+
+    #form-reg {
         left: 3%;
         margin-right: 3%;
         width: 88%;
@@ -255,9 +313,7 @@ p {
     }
 }
 
-
-/* Icons ---------------------------------- */
-#name{
+#name {
     background-image: none;
 }
 
@@ -265,64 +321,64 @@ p {
     background-image: none;
 }
 
-#username{
+#username {
     background-image: url(../gfx/onboarding/user.png);
     background-size: 24px;
     background-position: 11px 7px;
     background-repeat: no-repeat;
 }
 
-#username:focus{
+#username:focus {
     background-image: url(../gfx/onboarding/user-g.png);
     background-size: 24px;
     background-position: 11px 7px;
     background-repeat: no-repeat;
 }
 
-#website{
+#website {
     background-image: none;
     background-size: 24px;
     background-position: 11px 7px;
     background-repeat: no-repeat;
 }
 
-#website:focus{
+#website:focus {
     background-image: none;
     background-size: 24px;
     background-position: 11px 7px;
     background-repeat: no-repeat;
 }
 
-#password{
+#password {
     background-image: url(../gfx/onboarding/lock.png);
     background-size: 20px;
     background-position: 11px 6px;
     background-repeat: no-repeat;
 }
 
-#password:focus{
+#password:focus {
     background-image: url(../gfx/onboarding/lock-g.png);
     background-size: 20px;
     background-position: 11px 6px;
     background-repeat: no-repeat;
 }
 
-#website{
+#website {
     background-image: none;
 }
 
-#website:focus{
+#website:focus {
     background-image: none;
 }
 
-#email{
+#email {
     background-image: url(../gfx/onboarding/mail.png);
     background-size: 24px;
     background-position: 11px 11px;
     background-repeat: no-repeat;
 }
 
-#email:focus{
+#email:focus {
     background-image: url(../gfx/onboarding/mail-g.png);
     background-size: 24px;
     background-position: 11px 11px;
@@ -333,12 +389,12 @@ textarea {
     width: 100%;
     height: 150px;
     line-height: 150%;
-    resize:vertical;
+    resize: vertical;
 }
 
 input:hover,
-input:focus,  {
-    background-color:white;
+input:focus, {
+    background-color: white;
 }
 
 textarea:hover,
@@ -347,14 +403,13 @@ textarea:focus {
     color: #c5c5c5;
 }
 
-
-#button-profile{
+#button-profile {
     background-color: #73b2e3;
     border: 4px solid #fbfbfb;
     color: white;
     cursor: pointer;
     float: left;
-    font-family: 'Raleway',Helvetica,sans-serif;
+    font-family: 'Pontano Sans', Verdana, Helvetica, sans-serif;
     font-size: 28px;
     font-weight: 800;
     margin-top: -4px;
@@ -364,31 +419,8 @@ textarea:focus {
     width: 100%;
 }
 
-#button-profile:hover{
-    background-color: rgba(0,0,0,0);
-    color: #4c93cb;
-}
-
-#button-blue{
-    font-family: 'Open Sans',sans-serif;
-    float:left;
-    width: 100%;
-    border: #fbfbfb solid 4px;
-    cursor:pointer;
-    background-color: #73b2e3;
-    color:white;
-    font-size:28px;
-    padding-top:18px;
-    padding-bottom:18px;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-    transition: all 0.3s;
-    margin-top:-4px;
-    font-weight:600;
-}
-
-#button-blue:hover{
-    background-color: rgba(0,0,0,0);
+#button-profile:hover {
+    background-color: rgba(0, 0, 0, 0);
     color: #4c93cb;
 }
 
@@ -407,26 +439,22 @@ textarea:focus {
     transition: .3s ease;
 }
 
-.submit:hover .ease{
-    width:100%;
-    background-color:white;
+.submit:hover .ease {
+    width: 100%;
+    background-color: white;
 }
-
-
-
-/** New Stuff **/
 
 .control-label {
     color: #FFFFFF;
-    font-family: 'Raleway', Helvetica, sans-serif;
+    font-family: 'Pontano Sans', Verdana, Helvetica, sans-serif;
     font-weight: 500;
     font-size: 16px;
     font-weight: 600;
 }
 
 h2 {
-    font-family: 'Raleway', Helvetica, sans-serif;
-    font-size: 	28px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 28px;
     font-weight: 700;
     color: #FFFFFF;
     padding-bottom: 1px;
@@ -437,7 +465,7 @@ h2 {
 
 h3 {
     font-family: 'Open Sans', sans-serif;
-    font-size: 	24px;
+    font-size: 24px;
     font-weight: 700;
     color: #FFFFFF;
     padding-bottom: 1px;
@@ -456,6 +484,7 @@ h3 {
 
 .upload {
     text-align: center;
+    padding-top: 10px;
 }
 
 .camera {
@@ -466,19 +495,13 @@ h3 {
     background-color: #dddddd;
     border-bottom-color: #dddddd;
     border-radius: 4px;
-    border-style: solid;
+    border-style: none;
     border-width: 1px;
     box-shadow: none;
-    background-position: 15px 12px;
+    background-position: 15px 10px;
     color: #535353;
     font-family: Helvetica, sans-serif;
     font-size: 14px;
-}
-
-.upload input:hover, .upload input:focus {
-    background-color: #eaeaea;
-    color: #c5c5c5;
-    background-image: url(../gfx/onboarding/camera-g.png);
 }
 
 a {
@@ -498,27 +521,42 @@ a:hover, a:focus {
     text-align: left;
 }
 
-.fb {
-    background-image: url(../gfx/onboarding/facebook.png);
-    background-repeat: no-repeat;
-    background-size: 34px auto;
-    padding: 15px 15px 10px 75px;
-    background-color: #3b5998;
-    border-color: #3b5998;
+.connect {
     border-radius: 6px;
     border-style: solid;
     border-width: 1px;
     box-shadow: none;
-    background-position: 15px 8px;
+    background-position: 15px 9px;
     color: #FFFFFF;
     font-family: Helvetica, sans-serif;
     font-size: 24px;
     text-align: left;
     width: 100%;
     margin-bottom: 5px;
+    margin-top: 15px;
+    background-repeat: no-repeat;
+    background-size: 34px auto;
+    padding: 15px 15px 10px 75px;
 }
 
-input.fb:hover, input.fb:focus {
+.connect:hover {
+    text-decoration: none !important;
+}
+
+a.connect {
+    display: inline-block;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;         /* Opera/IE 8+ */
+}
+
+.fb {
+    background-image: url(../gfx/onboarding/facebook.png);
+    background-color: #3b5998;
+    border-color: #3b5998;
+}
+
+.fb:hover, .fb:focus {
     background-color: #8B9DC3;
     color: #FFFFFF;
     border-color: #8B9DC3;
@@ -527,26 +565,11 @@ input.fb:hover, input.fb:focus {
 
 .tw {
     background-image: url(../gfx/onboarding/twitter.png);
-    background-repeat: no-repeat;
-    background-size: 34px auto;
-    padding: 15px 15px 10px 75px;
     background-color: #55acee;
     border-color: #55acee;
-    border-radius: 6px;
-    border-style: solid;
-    border-width: 1px;
-    box-shadow: none;
-    background-position: 15px 10px;
-    color: #FFFFFF;
-    font-family: Helvetica, sans-serif;
-    font-size: 24px;
-    text-align: left;
-    width: 100%;
-    margin-bottom: 5px;
-    margin-top: 15px;
 }
 
-input.tw:hover, input.tw:focus {
+.tw:hover, .tw:focus {
     background-color: #66757f;
     color: #FFFFFF;
     border-color: #66757f;
@@ -555,26 +578,11 @@ input.tw:hover, input.tw:focus {
 
 .fl {
     background-image: url(../gfx/onboarding/flickr.png);
-    background-repeat: no-repeat;
-    background-size: 34px auto;
-    padding: 15px 15px 10px 75px;
     background-color: #0063dc;
     border-color: #0063dc;
-    border-radius: 6px;
-    border-style: solid;
-    border-width: 1px;
-    box-shadow: none;
-    background-position: 15px 9px;
-    color: #FFFFFF;
-    font-family: Helvetica, sans-serif;
-    font-size: 24px;
-    text-align: left;
-    width: 100%;
-    margin-bottom: 5px;
-    margin-top: 15px;
 }
 
-input.fl:hover, input.fl:focus {
+.fl:hover, .fl:focus {
     background-color: #ff0084;
     color: #FFFFFF;
     border-color: #ff0084;
@@ -583,26 +591,11 @@ input.fl:hover, input.fl:focus {
 
 .fsqr {
     background-image: url(../gfx/onboarding/foursquare.png);
-    background-repeat: no-repeat;
-    background-size: 34px auto;
-    padding: 15px 15px 10px 75px;
     background-color: #40B3DF;
     border-color: #40B3DF;
-    border-radius: 6px;
-    border-style: solid;
-    border-width: 1px;
-    box-shadow: none;
-    background-position: 15px 9px;
-    color: #FFFFFF;
-    font-family: Helvetica, sans-serif;
-    font-size: 24px;
-    text-align: left;
-    width: 100%;
-    margin-bottom: 5px;
-    margin-top: 15px;
 }
 
-input.fsqr:hover, input.fsqr:focus {
+.fsqr:hover, .fsqr:focus {
     background-color: #17649A;
     color: #FFFFFF;
     border-color: #17649A;
@@ -611,35 +604,30 @@ input.fsqr:hover, input.fsqr:focus {
 
 .scld {
     background-image: url(../gfx/onboarding/soundcloud.png);
-    background-repeat: no-repeat;
-    background-size: 48px auto;
-    padding: 15px 15px 10px 75px;
     background-color: #f80;
     border-color: #f80;
-    border-radius: 6px;
-    border-style: solid;
-    border-width: 1px;
-    box-shadow: none;
-    background-position: 15px 3px;
-    color: #FFFFFF;
-    font-family: Helvetica, sans-serif;
-    font-size: 24px;
-    text-align: left;
-    width: 100%;
-    margin-bottom: 5px;
-    margin-top: 15px;
 }
 
-input.scld:hover, input.scld:focus {
+.scld:hover, .scld:focus {
     background-color: #f30;
     color: #FFFFFF;
     border-color: #f30;
     background-image: url(../gfx/onboarding/soundcloud.png);
 }
 
+.connected {
+    background-color: #bbb;
+    border: #bbb solid 1px;
+}
+
+.connected:hover,
+.connected:focus {
+    background-color: #bbb;
+}
+
 .control-label {
     color: #FFFFFF;
-    font-family: 'Open Sans',sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-weight: 500;
     font-size: 16px;
     font-weight: 600;
@@ -659,11 +647,12 @@ input.scld:hover, input.scld:focus {
     margin-bottom: 10px;
     margin-top: 10px;
     text-shadow: none;
-    font-family: 'Raleway', Helvetica, sans-serif;
+    font-family: 'Pontano Sans', Verdana, Helvetica, sans-serif;
     font-weight: 700;
     font-size: 1.5em;
     width: 40%;
     margin-left: 5px;
+    -webkit-appearance: none;
 }
 
 .btn-continue:hover, .btn-continue:focus {
@@ -680,11 +669,12 @@ input.scld:hover, input.scld:focus {
     margin-bottom: 10px;
     margin-top: 10px;
     text-shadow: none;
-    font-family: 'Raleway', Helvetica, sans-serif;
+    font-family: 'Pontano Sans', Verdana, Helvetica, sans-serif;
     font-weight: 700;
     font-size: 1.5em;
     width: 40%;
     margin-right: 5px;
+    -webkit-appearance: none;
 }
 
 .btn-skip:hover, .btn-skip:focus {
@@ -705,6 +695,7 @@ input.scld:hover, input.scld:focus {
     display: inline-block;
     line-height: 24px;
     padding: 15px 65px;
+    -webkit-appearance: none;
 }
 
 .center-block {
@@ -722,7 +713,9 @@ input.scld:hover, input.scld:focus {
 .btn-file {
     position: relative;
     overflow: hidden;
+    -webkit-appearance: none;
 }
+
 .btn-file input[type=file] {
     position: absolute;
     top: 0;
@@ -736,4 +729,28 @@ input.scld:hover, input.scld:focus {
     background: white;
     cursor: pointer;
     display: block;
+}
+
+.btn-file:hover {
+    background-color: #eaeaea;
+    color: #c5c5c5;
+    background-image: url(../gfx/onboarding/camera-g.png);
+}
+
+.alerts {
+    background-color: #fff1ba;
+    /**    background-color: rgba(0,0,0,0.3); **/
+    padding: 10px;
+    border-radius: 7px;
+}
+
+.alerts .alert p {
+    font-size: 1.0em;
+    color: #666666;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.control-label small {
+	font-weight: 400;
 }

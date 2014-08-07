@@ -46,17 +46,32 @@
               href="<?= \Idno\Core\site()->config()->url ?>content/all?_t=rss"/>
         <link href="<?= \Idno\Core\site()->config()->url ?>webmention/" rel="http://webmention.org/"/>
         <link href="<?= \Idno\Core\site()->config()->url ?>webmention/" rel="webmention"/>
-        <link href="<?= \Idno\Core\site()->config()->url ?>css/simple.css"
-              rel="stylesheet">
+        <link href="<?= \Idno\Core\site()->config()->url ?>css/simple.css" rel="stylesheet">
+        <link href="http://fonts.googleapis.com/css?family=Pontano+Sans" rel="stylesheet" type="text/css">
+		<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800" rel='stylesheet' type='text/css'>
         <script src="<?= \Idno\Core\site()->config()->url . 'external/jquery/' ?>jquery.min.js"></script>
-        <?= $this->draw('shell/head', $vars); ?>
+        <?= $this->draw('shell/simple/head', $vars); ?>
     </head>
     <body class="<?php
 
         echo (str_replace('\\','_',strtolower(get_class(\Idno\Core\site()->currentPage()))));
+        if ($path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)) {
+            if ($path = explode('/',$path)) {
+                $page_class = '';
+                foreach($path as $element) {
+                    if (!empty($element)) {
+                        if (!empty($page_class)) {
+                            $page_class .= '-';
+                        }
+                        $page_class .= $element;
+                        echo ' page-' . $page_class;
+                    }
+                }
+            }
+        }
 
     ?>">
         <?= $vars['body'] ?>
-        <?= $this->draw('shell/footer', $vars) ?>
+        <?= $this->draw('shell/simple/footer', $vars) ?>
     </body>
 </html>

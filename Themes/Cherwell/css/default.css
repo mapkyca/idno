@@ -1,6 +1,5 @@
 body {
     background-color: #ffffff;
-    background: url(../img/cherwell.jpg) center fixed;
     background-size: cover;
 }
 
@@ -20,6 +19,17 @@ body {
     box-shadow: none;
     font-size: 1.1em;
     background-color: rgba(255,255,255,0.95);
+}
+
+.e-content p {
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 1em;
+}
+
+.idno-object .e-content li {
+    font-family: Helvetica,Arial,sans-serif;
+    font-size: 0.9em;
+    line-height: 1.5em;
 }
 
 .edit-pane {
@@ -139,6 +149,8 @@ body.page-share {
     background-image: none;
 }
 
+.result-404, .result-403, .result-410, .result-500,
+.page-begin-publish .page-container .page-body,
 .idno_pages_user_edit .page-container .page-body,
 .page-account .page-container .page-body,
 .page-admin .page-container .page-body {
