@@ -35,6 +35,7 @@
                     case 'post':
                         curl_setopt($curl_handle, CURLOPT_POST, 1);
                         curl_setopt($curl_handle, CURLOPT_POSTFIELDS, $req);
+                        $headers[] = 'Expect:';
                         break;
                     case 'delete':
                         curl_setopt($curl_handle, CURLOPT_CUSTOMREQUEST, 'DELETE'); // Override request type
@@ -64,6 +65,11 @@
                 curl_setopt($curl_handle, CURLOPT_RETURNTRANSFER, 1);
                 curl_setopt($curl_handle, CURLOPT_SSL_VERIFYPEER, 1);
                 curl_setopt($curl_handle, CURLOPT_SSL_VERIFYHOST, 2);
+                
+                // Proxy connection string provided
+                if (!empty(\Idno\Core\site()->config()->proxy_string)) {
+                    curl_setopt($curl_handle, CURLOPT_PROXY, \Idno\Core\site()->config()->proxy_string);
+                }
 
                 // Allow plugins and other services to extend headers, allowing for plugable authentication methods on calls
                 $new_headers = \Idno\Core\site()->triggerEvent('webservice:headers', ['headers' => $headers, 'verb' => $verb]);

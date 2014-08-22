@@ -25,25 +25,35 @@
     <?= $this->draw('shell/favicon'); ?>
 
     <?php
+        $opengraph = [
+            'og:type' => 'website',
+            'og:title' => htmlspecialchars($vars['title']),
+            'og:site_name' => \Idno\Core\site()->config()->title,
+            'og:image' => \Idno\Core\site()->config()->getURL() . 'gfx/logos/logo_k.png'
+	];
 
         if (\Idno\Core\site()->currentPage() && \Idno\Core\site()->currentPage()->isPermalink()) {
-            $object = $vars['object'];
 
-            ?>
-            <!-- "Open" Graph -->
-            <meta property="og:title" content="<?= htmlspecialchars($vars['title']); ?>" />
-            <meta property="og:type" content="website" />
-            <meta property="og:image" content="<?=\Idno\Core\site()->config()->getURL()?>gfx/logos/logo_k.png" />
-            <?php
+            $opengraph['og:url'] = \Idno\Core\site()->currentPage()->currentUrl();
 
-                if ($url = $object->getURL()) {
+            if (!empty($vars['object'])) {
+                $owner = $vars['object']->getOwner();
+                $object = $vars['object'];
 
-            ?>
-            <meta property="og:url" content="<?=$url?>"/>
-            <?php
+                $opengraph['og:title'] = $vars['object']->getTitle();
+                $opengraph['og:description'] = $vars['object']->getShortDescription();
+                $opengraph['og:type'] = $vars['object']->getActivityStreamsObjectType();
+                $opengraph['og:image'] = $owner->getIcon(); //Icon, for now set to being the author profile pic
 
+                if ($url = $vars['object']->getURL()) {
+                    $opengraph['og:url'] = $vars['object']->getURL();
                 }
+            }
+            
         }
+        
+        foreach ($opengraph as $key => $value) 
+            echo "<meta property=\"$key\" content=\"$value\" />\n";
 
     ?>
 
@@ -54,17 +64,21 @@
 
         if (\Idno\Core\site()->currentPage() && \Idno\Core\site()->currentPage()->isPermalink()) {
             /* @var \Idno\Common\Entity $object */
-            if ($creator = $object->getOwner()) {
-                ?>
-                <meta name="DC.creator" content="<?= htmlentities($creator->getTitle()) ?>"><?php
-            }
-            if ($created = $object->created) {
-                ?>
-                <meta name="DC.date" content="<?= date('c', $created) ?>"><?php
-            }
-            if ($url = $object->getURL()) {
-                ?>
-                <meta name="DC.identifier" content="<?= htmlspecialchars($url) ?>"><?php
+            if ($object instanceof \Idno\Common\Entity) {
+
+                if ($creator = $object->getOwner()) {
+                    ?>
+                    <meta name="DC.creator" content="<?= htmlentities($creator->getTitle()) ?>"><?php
+                }
+                if ($created = $object->created) {
+                    ?>
+                    <meta name="DC.date" content="<?= date('c', $created) ?>"><?php
+                }
+                if ($url = $object->getURL()) {
+                    ?>
+                    <meta name="DC.identifier" content="<?= htmlspecialchars($url) ?>"><?php
+                }
+
             }
         }
 

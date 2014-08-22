@@ -26,13 +26,19 @@
                 $this->adminGatekeeper(); // Admins only
                 $theme  = $this->getInput('theme');
                 $action = $this->getInput('action');
-                $host = str_replace('www.','',strtolower($_SERVER['HTTP_HOST']));
+                if (defined('KNOWN_MULTITENANT_HOST')) {
+                    $host = KNOWN_MULTITENANT_HOST;
+                }
                 if (
                     (
                         preg_match('/^[a-zA-Z0-9]+$/', $theme) &&
                         (
                             file_exists(\Idno\Core\site()->config()->path . '/Themes/' . $theme) ||
-                            file_exists(\Idno\Core\site()->config()->path . '/hosts/' . $host . '/Themes/' . $theme)
+                            (
+                                !empty($host) && (
+                                    file_exists(\Idno\Core\site()->config()->path . '/hosts/' . $host . '/Themes/' . $theme)
+                                )
+                            )
                         )
                     )
                     || $theme == ''

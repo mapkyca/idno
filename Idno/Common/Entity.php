@@ -12,10 +12,6 @@
 
     namespace Idno\Common {
 
-        interface EntityInterface extends \JsonSerializable, \ArrayAccess
-        {
-        }
-
         class Entity extends Component implements EntityInterface
         {
 
@@ -483,7 +479,7 @@
              */
             function syndicate() {
                 if ($this->getActivityStreamsObjectType()) {
-                    $event = new \Idno\Core\Event(array('object' => $this));
+                    $event = new \Idno\Core\Event(array('object' => $this, 'object_type' => $this->getActivityStreamsObjectType()));
                     \Idno\Core\site()->events()->dispatch('post/' . $this->getActivityStreamsObjectType(), $event);
                     \Idno\Core\site()->events()->dispatch('syndicate', $event);
                 }
@@ -494,7 +490,7 @@
              */
             function unsyndicate() {
                 if ($this->getActivityStreamsObjectType()) {
-                    $event = new \Idno\Core\Event(array('object' => $this));
+                    $event = new \Idno\Core\Event(array('object' => $this, 'object_type' => $this->getActivityStreamsObjectType()));
                     \Idno\Core\site()->events()->dispatch('delete/' . $this->getActivityStreamsObjectType(), $event);
                     \Idno\Core\site()->events()->dispatch('unsyndicate', $event);
                 }
@@ -1280,6 +1276,11 @@
 
             function getURL()
             {
+
+                // If we have a URL override, use it
+                if (!empty($this->url)) {
+                    return $this->url;
+                }
 
                 // If a slug has been set, use it
                 if ($slug = $this->getSlug()) {

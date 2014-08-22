@@ -102,12 +102,9 @@
              * a configuration value.
              */
 
-            function __get($name)
+            function &__get($name)
             {
-                if (isset($this->config[$name]))
-                    return $this->config[$name];
-
-                return null;
+                return $this->config[$name];
             }
 
             /**
@@ -196,6 +193,18 @@
                 } else {
                     return '/';
                 }
+            }
+
+            /**
+             * Retrieve the name of this site
+             * @return string
+             */
+            function getTitle()
+            {
+                if (!empty($this->title)) {
+                    return $this->title;
+                }
+                return '';
             }
 
             /**

@@ -27,6 +27,7 @@
             public $syndication;
             public static $site;
             public $currentPage;
+            public $known_hub;
 
             function init()
             {
@@ -84,6 +85,17 @@
                 $this->syndication = new Syndication();
                 $this->plugins     = new Plugins(); // This must be loaded last
                 $this->themes      = new Themes();
+
+                // Connect to a Known hub if one is listed in the configuration file
+                if (empty(site()->session()->hub_connect)) {
+                    site()->session()->hub_connect = 0;
+                }
+                if (!empty($this->config->known_hub) && !substr_count($_SERVER['REQUEST_URI'],'.') && site()->session()->hub_connect < (time() - 10)) {
+                    site()->session()->hub_connect = time();
+                    error_log('Connecting to ' . $this->config->known_hub);
+                    \Idno\Core\site()->known_hub = new \Idno\Core\Hub($this->config->known_hub);
+                    \Idno\Core\site()->known_hub->connect();
+                }
 
                 User::registerEvents();
             }
@@ -171,6 +183,15 @@
             function &filesystem()
             {
                 return $this->filesystem;
+            }
+
+            /**
+             * Returns the current Known hub
+             * @return \Idno\Core\Hub
+             */
+            function &hub()
+            {
+                return $this->known_hub;
             }
 
             /**
@@ -306,6 +327,26 @@
                     $this->pagehandlers[$pattern] = $handler;
                     if ($public == true) {
                         $this->public_pages[] = $handler;
+                    }
+                }
+            }
+
+            /**
+             * Registers a page handler for a given pattern, using Toro
+             * page handling syntax - and ensures it will be handled first
+             *
+             * @param string $pattern The pattern to match
+             * @param callable $handler The handler callable that will serve the page
+             * @param bool $public If set to true, this page is always public, even on non-public sites
+             */
+            function hijackPageHandler($pattern, $handler, $public = false)
+            {
+                if (class_exists($handler)) {
+                    unset($this->pagehandlers[$pattern]);
+                    unset($this->public_pages[$pattern]);
+                    $this->pagehandlers = [$pattern => $handler] + $this->pagehandlers;
+                    if ($public == true) {
+                        $this->public_pages = [$pattern => $handler] + $this->public_pages;
                     }
                 }
             }

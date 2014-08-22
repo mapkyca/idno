@@ -85,6 +85,7 @@ h1, h2, h3, h4, h5, h6 {
     display: inline-block;
 }
 
+
 /**
     Activity streams
 */
@@ -102,8 +103,18 @@ h1, h2, h3, h4, h5, h6 {
     font-family: "Helvetica Neue","Helvetica",Helvetica,Arial,sans-serif;
 }
 
+.idno-object h1 a, .idno-object h2 a, .idno-object h3 a {
+	color: #333333;
+}
+
+.idno-object h1 a:hover, .idno-object h1 a:focus, 
+.idno-object h2 a:hover, .idno-object h2 a:focus, 
+.idno-object h3 a:hover, .idno-object h3 a:focus {
+	color: #999999;
+}
+
 .idno-object a {
-	color:#333333;
+	color:#4c93cb;
 
 }
 
@@ -164,7 +175,7 @@ h1, h2, h3, h4, h5, h6 {
 .idno-object .e-content {
     overflow: auto;
     margin-bottom: 1em;
-    padding-top: 1em;
+    padding-top: 0em;
     line-height:1.6em;
     font-size: 1em;
 }
@@ -189,8 +200,13 @@ h1, h2, h3, h4, h5, h6 {
     float: left;
 }
 
-.idno-object .permalink a, .idno-object .permalink a:hover {
-    color: #999;
+.idno-object .permalink a {
+    color: #4c93cb;
+    margin-right: 0.25em;
+}
+
+.idno-object .permalink a:hover {
+    color: #357ebd;
     margin-right: 0.25em;
 }
 
@@ -208,9 +224,9 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .idno-object .dt-published {
-    color: #999;
     margin-right: 0.25em;
 }
+
 
 .idno-object .interactions a:hover {
     color: #333;
@@ -416,9 +432,14 @@ span.contentTypeLogo {
 }
 
 .vague {
-    font-size: 0.8em;
+    font-size: 12px;
     color: #999;
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.reading {
+	text-align: left;
+	margin-bottom: 5px;
 }
 
 .syndication span,
@@ -692,13 +713,13 @@ div.pane div.row:nth-of-type(odd) {
 }
 
 a {
-    color: #73b2e3;
+    color: #4c93cb;
     text-decoration: none;
     font-weight: 400;
 }
 
 a:hover, a:focus {
-	color: #4c93cb;
+	color: #357ebd;
 }
 
 input[type="email"], input[type="password"], input[type="text"]  {	
@@ -768,7 +789,7 @@ select, textarea, input[type="text"], input[type="password"], input[type="dateti
 }
 
 .navbar .brand {
-	font-weight: 600;
+	font-weight: 400;
 	font-size: 28px;
 }
 
@@ -921,3 +942,6 @@ small {
 	box-shadow: none;
 }
 
+.p-map {
+	padding-top: 10px;
+}
