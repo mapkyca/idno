@@ -91,11 +91,13 @@
                             }
                             $vars['object'] = $event->data()['object'];
 
-                            $email = new Email();
-                            $email->setSubject($event->data()['message']);
-                            $email->setHTMLBodyFromTemplate($event->data()['message_template'], $vars);
-                            $email->addTo($user->email);
-                            $email->send();
+                            if (filter_var($user->email, FILTER_VALIDATE_EMAIL)) {
+                                $email = new Email();
+                                $email->setSubject($event->data()['message']);
+                                $email->setHTMLBodyFromTemplate($event->data()['message_template'], $vars);
+                                $email->addTo($user->email);
+                                $email->send();
+                            }
 
                         }
 
@@ -116,6 +118,9 @@
                 $response = \Idno\Core\site()->triggerEvent('icon', array('object' => $this));
                 if (!empty($response) && $response !== true) {
                     return $response;
+                }
+                if (!empty($this->image)) {
+                    return $this->image;
                 }
                 if (!empty($this->icon)) {
                     return \Idno\Core\site()->config()->url . 'file/' . $this->icon;
@@ -148,6 +153,9 @@
              */
             function getURL()
             {
+                if (!empty($this->url)) {
+                    return $this->url;
+                }
                 return \Idno\Core\site()->config()->url . 'profile/' . $this->getHandle();
             }
 

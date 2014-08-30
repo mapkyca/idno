@@ -1,11 +1,6 @@
-<div id="bg">
-    <img src="<?=\Idno\Core\site()->config()->getURL()?>gfx/onboarding/sky.jpg" alt="">
-</div>
 <div id="form-main">
     <div id="form-div">
-        <h2 class="profile">Share something about yourself</h2>
-
-        <p>Don't worry, you can change this anytime.</p>
+        <h2 class="profile">Create your profile</h2>
 
         <?=$this->draw('shell/simple/messages')?>
 
@@ -13,7 +8,7 @@
 
             <p class="profile-pic" id="photo-preview">
                 <img src="<?=$vars['user']->getIcon()?>" alt="" style="width: 150px"
-                                 class="icon-container"/>
+                                 class="icon-container" onclick="$('#photo').click();"/>
             </p>
 
             <div class="upload">
@@ -24,28 +19,28 @@
             </div>
             <p class="name">
                 <label class="control-label" for="inputName">Your name<br/></label>
-                <input name="name" type="text" class="profile-input" placeholder="Joe Montgolfier" id="name"/>
+                <input name="name" type="text" class="profile-input" placeholder="Ben Franklin" id="name"/>
             </p>
 
             <p class="text">
-                <label class="control-label" for="inputName">What's special about you?<br/></label>
+                <label class="control-label" for="inputName">Your short bio<br/></label>
                 <textarea name="profile[description]" class="profile-input" id="description"
-                          placeholder="I fly hot air balloons..."></textarea>
+                          placeholder="I fly kites..."></textarea>
             </p>
 
             <p class="website">
                 <span id="websites">
-                    <label class="control-label" for="inputWebsite">Your websites<br/></label>
+                    <label class="control-label" for="inputWebsite">Your other websites <small>(a blog, a portfolio, Twitter, Facebook, etc)</small><br/></label>
                     <input name="profile[url][]" type="url" class="profile-input" id="website" placeholder="http://..."/>
                 </span>
                 <a href="#" onclick="$('#websites').append($('#website-template').html()); return false;">Add another website</a>
             </p>
-
-            <div class="submit">
-                <?= \Idno\Core\site()->actions()->signForm('/profile/' . $vars['user']->getHandle()) ?>
-                <input type="submit" value="Save profile" class="btn btn-reg"/>
-                <input type="hidden" name="onboarding" value="1"/>
-            </div>
+          <div class="col-md-12">
+          <div class="submit">
+          <?= \Idno\Core\site()->actions()->signForm('/profile/' . $vars['user']->getHandle()) ?>
+          <button type="submit" value="Save profile" class="btn btn-primary btn-lg btn-responsive">Save profile</button>  
+          <input type="hidden" name="onboarding" value="1"/>      
+		  </div>
         </form>
         <div id="website-template" style="display:none"><input name="profile[url][]" type="url" class="profile-input" id="website" placeholder="http://..."/></div>
 

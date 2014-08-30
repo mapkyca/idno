@@ -1,21 +1,20 @@
-<div id="bg">
-    <img src="<?=\Idno\Core\site()->config()->getURL()?>gfx/onboarding/sky.jpg" alt="">
-</div>
 <div id="form-main">
     <div id="form-div">
-        <h2 class="profile">Connect some networks</h2>
-
-        <p>Add your favorite social networks and share with your audience.</p>
+    	<h2>Share to social</h2>
+		<p class="social-connect">Connect your accounts to easily share work</p>
 
         <?=$this->draw('onboarding/connect/networks');?>
 
-        <div class="next-bar">
-            <input class="btn btn-skip" type="button" value="Skip" onclick="window.location = '<?=\Idno\Core\site()->config()->getURL()?>begin/publish'; return false;"/>
-            <input class="btn btn-continue" type="button" value="Continue" onclick="window.location = '<?=\Idno\Core\site()->config()->getURL()?>begin/publish'; return false;" />
-        </div>
+          <div class="col-md-12 next-bar" align="center">
+          <!--<button class="btn btn-primary btn-lg btn-responsive" onclick="window.location = '<?=\Idno\Core\site()->config()->getURL()?>begin/publish'; return false;">Skip</button>  -->      
+          <button class="btn btn-primary btn-lg btn-responsive" onclick="window.location = '<?=\Idno\Core\site()->config()->getURL()?>begin/publish'; return false;">Continue</button>       
+		  </div>
+		  <p align="center">
+          <a href="<?=\Idno\Core\site()->config()->getURL()?>begin/publish">Or skip this step.</a>
+          </p> 
 
-        <p>
-            Don't worry, you can always connect your social networks later.
+        <p align="center">
+            Don't worry, you can always connect these later.
         </p>
 
     </div>

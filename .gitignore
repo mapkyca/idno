@@ -16,6 +16,13 @@ Idno/.idea/.name
 /*/.DS_Store
 /IdnoPlugins/LightBox/nbproject/private/
 
-config.ini
-config.json
+*.ini
+*.json
 tests/_output/*
+
+IdnoPlugins/Facebook/
+IdnoPlugins/Flickr/
+IdnoPlugins/Foursquare/
+IdnoPlugins/SoundCloud/
+IdnoPlugins/Twitter/
+>>>>>>> master

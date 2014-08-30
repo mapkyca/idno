@@ -32,6 +32,16 @@
                 site()->addPageHandler('hub/register/user/callback', 'Idno\Pages\Hub\Register\User', true);
             }
 
+            function registerEventHooks()
+            {
+                // Register user on login
+                site()->addEventHook('login/success', function (\Idno\Core\Event $event) {
+                    if ($user = $event->data()['user']) {
+                        $this->registerUser($user);
+                    }
+                });
+            }
+
             /**
              * Sets the hub server to connect to
              * @param $server
@@ -84,19 +94,19 @@
 
                 // If we have details, and we're logged in, connect with OAuth
                 if (site()->session()->isLoggedOn()) {
-                    error_log("User is logged on, checking hub status");
+                    \Idno\Core\site()->logging->log("User is logged on, checking hub status");
                     if (!empty($details)) {
                         try {
                             if (!$this->userIsRegistered()) {
-                                error_log("User isn't registered; registering ...");
+                                \Idno\Core\site()->logging->log("User isn't registered; registering ...");
                                 $this->registerUser();
                             }
                         } catch (\Exception $e) {
-                            error_log($e->getMessage());
+                            \Idno\Core\site()->logging->log($e->getMessage());
                         }
                     }
                 } else {
-                    error_log("No user");
+                    \Idno\Core\site()->logging->log("No user");
                 }
 
                 return false;
