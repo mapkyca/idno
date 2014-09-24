@@ -5,18 +5,18 @@
     if (!empty($vars['object']->body)) {
         $body = $vars['object']->body;
     } else {
-        $body = $autosave->getValue('entry', 'body');
+        $body = ''; //$autosave->getValue('entry', 'body');
     }
     if (!empty($vars['object']->title)) {
         $title = $vars['object']->title;
     } else {
-        $title = $autosave->getValue('entry', 'title');
+        $title = ''; //$autosave->getValue('entry', 'title');
     }
 
     /* @var \Idno\Core\Template $this */
 
 ?>
-    <form action="<?= $vars['object']->getURL() ?>" method="post" onsubmit="return postForm()">
+    <form action="<?= $vars['object']->getURL() ?>" method="post" >
 
         <div class="row">
 
@@ -55,15 +55,13 @@
                                   class="span8 bodyInput mentionable wysiwyg"><?= htmlspecialchars($this->autop($body)) ?></textarea>
                     </label>
                 </p>
-
+                <?=$this->draw('entity/tags/input');?>
                 <?php if (empty($vars['object']->_id)) echo $this->drawSyndication('article'); ?>
 
                 <div class="wordcount" id="result">
 
                     Total words <strong><span id="totalWords">0</span></strong>
                 </div>
-                <p class="note">Posts support <strong>text</strong> and <strong>markup</strong>. Feel free to add
-                    <strong>#tags</strong>.</p>
 
                 <p class="button-bar ">
                     <?= \Idno\Core\site()->actions()->signForm('/text/edit') ?>
@@ -78,14 +76,16 @@
     </form>
     <script>
 
-        function postForm() {
-            var content = $('textarea[name="body"]').html($('#body').code());
-        }
+        /*function postForm() {
+            var content = $('textarea[name="body"]').html($('#body').html());
+            console.log(content);
+            return content;
+        }*/
 
         counter = function () {
 
             var value = $('#body').code(); // $('#body').val();
-
+console.log(value);
             if (value.length == 0) {
                 $('#totalWords').html(0);
                 $('#totalChars').html(0);
@@ -155,6 +155,6 @@
         }
 
         // Autosave the title & body
-        autoSave('entry', ['title', 'body']);
+        //autoSave('entry', ['title', 'body']);
     </script>
 <?= $this->draw('entity/edit/footer'); ?>

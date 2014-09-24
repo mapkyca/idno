@@ -29,6 +29,7 @@
             public static $site;
             public $currentPage;
             public $known_hub;
+            public $helper_robot;
 
             function init()
             {
@@ -36,7 +37,8 @@
                 $this->dispatcher = new \Symfony\Component\EventDispatcher\EventDispatcher();
                 $this->config     = new Config();
                 if ($this->config->isDefaultConfig()) {
-                    // TODO: invoke installer
+                    header('Location: ./warmup/');
+                    exit; // Load the installer
                 }
                 switch ($this->config->database) {
                     case 'mongodb':
@@ -83,13 +85,14 @@
                         break;
                 }
                 $this->config->load();
-                $this->session     = new Session();
-                $this->actions     = new Actions();
-                $this->template    = new Template();
-                $this->syndication = new Syndication();
-                $this->logging     = new Logging();
-                $this->plugins     = new Plugins(); // This must be loaded last
-                $this->themes      = new Themes();
+                $this->session      = new Session();
+                $this->actions      = new Actions();
+                $this->template     = new Template();
+                $this->syndication  = new Syndication();
+                $this->logging      = new Logging($this->config->log_level);
+                $this->plugins      = new Plugins(); // This must be loaded last
+                $this->themes       = new Themes();
+                $this->helper_robot = new HelperRobot();
 
                 // Connect to a Known hub if one is listed in the configuration file
                 // (and this isn't the hub!)
@@ -164,6 +167,7 @@
                 $this->addPageHandler('/begin/register/?', '\Idno\Pages\Onboarding\Register', true);
                 $this->addPageHandler('/begin/profile/?', '\Idno\Pages\Onboarding\Profile');
                 $this->addPageHandler('/begin/connect/?', '\Idno\Pages\Onboarding\Connect');
+                $this->addPageHandler('/begin/connect\-forwarder/?', '\Idno\Pages\Onboarding\ConnectForwarder');
                 $this->addPageHandler('/begin/publish/?', '\Idno\Pages\Onboarding\Publish');
 
             }
@@ -479,7 +483,7 @@
              */
             function version()
             {
-                return '0.6-dev';
+                return '0.6.3';
             }
 
             /**
@@ -594,6 +598,26 @@
                     return $results['content'];
                 }
 
+            }
+
+            /**
+             * Is this site being run in embedded mode? Hides the navigation bar, maybe more.
+             * @return bool
+             */
+            function embedded()
+            {
+                if (site()->currentPage()->getInput('unembed')) {
+                    $_SESSION['embedded'] = false;
+                    return false;
+                }
+                if (!empty($_SESSION['embedded'])) {
+                    return true;
+                }
+                if (site()->currentPage()->getInput('embedded')) {
+                    $_SESSION['embedded'] = true;
+                    return true;
+                }
+                return false;
             }
 
         }

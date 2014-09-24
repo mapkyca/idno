@@ -16,9 +16,10 @@ Idno/.idea/.name
 /*/.DS_Store
 /IdnoPlugins/LightBox/nbproject/private/
 
-*.ini
+config.ini
 *.json
 tests/_output/*
+*-ori.*
 
 IdnoPlugins/Facebook/
 IdnoPlugins/Flickr/
