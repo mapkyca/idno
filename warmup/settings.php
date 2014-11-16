@@ -88,7 +88,7 @@ END;
             if ($fp = @fopen('../config.ini', 'w')) {
                 fwrite($fp, $ini_file);
                 fclose($fp);
-                header('Location: ../begin/register');
+                header('Location: ../begin/register?set_name=' . urlencode($site_title));
                 exit;
             } else {
                 include 'writeconfig.php';
