@@ -440,7 +440,7 @@
                             if (class_exists('CURLFile')) {
                                 return new \CURLFile($file, $mime, $name);
                             } else {
-                                throw new \Idno\Exceptions\WebserviceException("CURLFile does not exist");
+                                throw new \Idno\Exceptions\WebserviceException("Sorry, CURLFile is not supported by your version of PHP");
                             }
                         }
 
