@@ -178,9 +178,14 @@ Notifications.poll = function () {
 				    window.location.href = link;
 				}
 			    } catch (e) {
-				// We have to use service worker, as New doesn't work
-				
-				// TODO : Implement
+				// We have to use service worker, as "new Notification" doesn't work anymore
+				navigator.serviceWorker.ready.then(function(registration) {
+				    registration.showNotification(title, {
+					icon: icon,
+					body: body,
+					data: link
+				    });
+				});
 			    }
 			}
 		    }
