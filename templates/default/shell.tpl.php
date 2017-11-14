@@ -51,7 +51,7 @@
     echo $template->draw('shell/assets');
     echo $template->draw('shell/footerjavascript');
     echo $template->draw('shell/footer');
-    echo $template->draw('shell/serviceworker');
+    //echo $template->draw('shell/serviceworker');
 ?>
 </body>
 </html>

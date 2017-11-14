@@ -179,13 +179,13 @@ Notifications.poll = function () {
 				}
 			    } catch (e) {
 				// We have to use service worker, as "new Notification" doesn't work anymore
-				navigator.serviceWorker.ready.then(function(registration) {
-				    registration.showNotification(title, {
-					icon: icon,
-					body: body,
-					data: link
-				    });
-				});
+//				navigator.serviceWorker.ready.then(function(registration) {
+//				    registration.showNotification(title, {
+//					icon: icon,
+//					body: body,
+//					data: link
+//				    });
+//				});
 			    }
 			}
 		    }
