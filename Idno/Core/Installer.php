@@ -67,10 +67,11 @@ namespace Idno\Core {
         protected function writeApacheConfig() {
             if (file_exists($this->root_path . '/.htaccess')) {
                 if ($fp = @fopen($this->root_path . '/.htaccess', 'a')) {
-                    fwrite($fp, "\n\n\n" . file_get_contents($this->root_path . '/warmup/webserver-configs/htaccess.dist'));
+                    //fwrite($fp, "\n\n\n" . file_get_contents($this->root_path . '/warmup/webserver-configs/htaccess.dist')); // Don't think this is safe
                 }
-            } else {
-                @rename($this->root_path . '/warmup/webserver-configs/htaccess.dist', $this->root_path . '/.htaccess');
+                fclose ($fp);
+            } else { 
+                @copy($this->root_path . '/warmup/webserver-configs/htaccess.dist', $this->root_path . '/.htaccess');
             }
         }
         
