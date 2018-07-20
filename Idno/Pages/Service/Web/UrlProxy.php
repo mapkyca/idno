@@ -6,7 +6,7 @@ namespace Idno\Pages\Service\Web {
         
         public function getContent() {
             
-            $url = trim($this->getInput('url'));
+            $url = trim(\Idno\Core\Webservice::base64UrlDecode($this->getInput('url')));
             
             if (empty($url))
                 throw new \RuntimeException(\Idno\Core\Idno::site()->language()->_("You need to specify a working URL"));

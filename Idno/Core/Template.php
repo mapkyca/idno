@@ -656,7 +656,7 @@
              * @return URL
              */
             public function getProxiedUrl($url) {
-                 return \Idno\Core\Idno::site()->config()->getDisplayURL() . 'service/web/urlproxy/?url=' . urlencode($url);
+                 return \Idno\Core\Idno::site()->config()->getDisplayURL() . 'service/web/urlproxy/?url=' . \Idno\Core\Webservice::base64UrlEncode($url);
             }
             
             /**
