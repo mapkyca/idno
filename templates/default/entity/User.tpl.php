@@ -22,7 +22,7 @@ if (empty($vars['user']) && !empty($vars['object'])) {
             <div class="col-md-4 namebadge">
                 <p>
                     <a href="<?php echo $vars['user']->getDisplayURL() ?>" class="u-url icon-container"><img class="u-photo"
-                                                                                               src="<?php echo $vars['user']->getIcon() ?>"/></a>
+                                                                                               src="<?php echo $vars['user']->getIcon() ?>" alt="<?php echo htmlentities(strip_tags($vars['user']->getTitle()), ENT_QUOTES, 'UTF-8') ?>"/></a>
                 </p>
 
                         <?php
